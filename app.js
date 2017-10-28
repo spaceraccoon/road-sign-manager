@@ -35,7 +35,7 @@ app.post('/', function(req, res, next) {
 });
 
 app.post('/message/text', function(req, res) {
-    console.log(req.body);
+    console.log(req.body.message);
     res.render('messageText');
 });
 
