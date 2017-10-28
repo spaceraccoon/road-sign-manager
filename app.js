@@ -4,12 +4,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var axios = require('axios');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var messageManual = require('./routes/messageManual')
-var messageText = require('./routes/messageText')
+var message = require('./routes/message')
 
 
 var app = express();
@@ -28,31 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/message/manual', messageManual);
-app.use('/message/text', messageText);
-
-app.post('/', function(req, res, next) {
-  console.log(req.body);
-  axios.post('https://morning-caverns-74081.herokuapp.com/message', {
-    'message': req.body.manual
-  });
-  res.render('index');
-});
-
-//Receive on POST and console logs message (for /message/text)
-app.post('/message/text', function(req, res) {
-  console.log(req.body.message);
-  res.render('messageText');
-});
-
-//Receive on POST and send message to traffic sign (for /message/manual)
-app.post('/message/manual', function(req, res, next) {
-  console.log(req.body.message);
-  axios.post('https://morning-caverns-74081.herokuapp.com/message', {
-    'message': req.body.message
-  })
-  res.render('messageManual')
-});
+app.use('/message', message);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -60,7 +34,6 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
-
 
 // error handler
 app.use(function(err, req, res, next) {
