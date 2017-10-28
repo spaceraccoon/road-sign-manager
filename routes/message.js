@@ -20,7 +20,7 @@ router.post('/text', function(req, res) {
 //Receive on POST and send message to traffic sign (for /message/manual)
 router.post('/manual', function(req, res, next) {
   console.log(req.body.message);
-  axios.post('https://morning-caverns-74081.herokuapp.com/message', {
+  axios.post(process.env.ROAD_SIGN_URL, {
     'message': req.body.message
   })
   res.render('messageManual', { title: 'Manual Mode' });
