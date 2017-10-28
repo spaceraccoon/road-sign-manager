@@ -33,13 +33,18 @@ app.post('/', function(req, res, next) {
     })
     res.render('index')
 });
+
+app.post('/message/text', function(req, res)) {
+    console.log(req.body);
+    res.render('messageText');
+}
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
-
 
 
 // error handler
