@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  form(action='/message/manual', method='post')
+     input(id='manual',name='manual',type='text',value='',placeholder='@')
+     input(type='submit',value='Submit')
