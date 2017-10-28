@@ -33,6 +33,17 @@ app.post('/', function(req, res, next) {
     })
     res.render('index')
 });
+
+//Receive on POST and send message to traffic sign (for /message/manual)
+app.post('/message/manual', function(req, res, next) {
+    console.log(req.body.message);
+    axios.post('https://morning-caverns-74081.herokuapp.com/message/manual', {
+      'message': req.body.message
+    })
+    res.render('messageManual')
+});
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
