@@ -37,7 +37,7 @@ app.post('/', function(req, res, next) {
 //Receive on POST and send message to traffic sign (for /message/manual)
 app.post('/message/manual', function(req, res, next) {
     console.log(req.body.message);
-    axios.post('https://morning-caverns-74081.herokuapp.com/message/manual', {
+    axios.post('https://morning-caverns-74081.herokuapp.com/message', {
       'message': req.body.message
     })
     res.render('messageManual')
