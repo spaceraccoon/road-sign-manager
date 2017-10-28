@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var axios = require('axios');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -25,12 +26,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 
+app.post('/', function(req, res, next) {
+    console.log(req.body);
+    axios.post('https://morning-caverns-74081.herokuapp.com/message', {
+      'message': req.body.manual
+    })
+    res.render('index')
+});
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
+
+
 
 // error handler
 app.use(function(err, req, res, next) {
