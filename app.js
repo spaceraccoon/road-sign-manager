@@ -27,16 +27,26 @@ app.use('/', index);
 app.use('/users', users);
 
 app.post('/', function(req, res, next) {
-    console.log(req.body);
-    axios.post('https://morning-caverns-74081.herokuapp.com/message', {
-      'message': req.body.manual
-    })
-    res.render('index')
+  console.log(req.body);
+  axios.post('https://morning-caverns-74081.herokuapp.com/message', {
+    'message': req.body.manual
+  });
+  res.render('index');
 });
 
+//Receive on POST and console logs message (for /message/text)
 app.post('/message/text', function(req, res) {
-    console.log(req.body.message);
-    res.render('messageText');
+  console.log(req.body.message);
+  res.render('messageText');
+});
+
+//Receive on POST and send message to traffic sign (for /message/manual)
+app.post('/message/manual', function(req, res, next) {
+  console.log(req.body.message);
+  axios.post('https://morning-caverns-74081.herokuapp.com/message', {
+    'message': req.body.message
+  })
+  res.render('messageManual')
 });
 
 // catch 404 and forward to error handler
