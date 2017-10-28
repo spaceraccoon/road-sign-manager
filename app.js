@@ -8,6 +8,9 @@ var axios = require('axios');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var messageManual = require('./routes/messageManual')
+var messageText = require('./routes/messageText')
+
 
 var app = express();
 
@@ -25,6 +28,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/message/manual', messageManual);
+app.use('/message/text', messageText);
 
 app.post('/', function(req, res, next) {
     console.log(req.body);
