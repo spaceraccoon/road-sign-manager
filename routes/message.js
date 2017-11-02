@@ -12,7 +12,7 @@ router.get('/text', function(req, res, next) {
 });
 
 router.get('/image', function(req, res, next) {
-	res.render('imageText', { title: 'Image Text Mode' });
+	res.render('messageImage', { title: 'Image Mode' });
 })
 
 //Receive on POST and console logs message (for /message/text)
@@ -23,7 +23,7 @@ router.post('/text', function(req, res) {
 
 router.post('/image', function(req, res) {
 	console.log(req.body.message);
-  res.render('imageText', { title: 'Image Text Mode' });
+  res.render('messageImage', { title: 'Image Mode' });
 })
 
 //Receive on POST and send message to traffic sign (for /message/manual)
