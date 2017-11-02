@@ -11,11 +11,20 @@ router.get('/text', function(req, res, next) {
   res.render('messageText', { title: 'Text Mode' });
 });
 
+router.get('/image', function(req, res, next) {
+	res.render('imageText', { title: 'Image Text Mode' });
+})
+
 //Receive on POST and console logs message (for /message/text)
 router.post('/text', function(req, res) {
   console.log(req.body.message);
   res.render('messageText', { title: 'Text Mode' });
 });
+
+router.post('/image', function(req, res) {
+	console.log(req.body.message);
+  res.render('imageText', { title: 'Image Text Mode' });
+})
 
 //Receive on POST and send message to traffic sign (for /message/manual)
 router.post('/manual', function(req, res, next) {

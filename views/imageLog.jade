@@ -1,8 +1,0 @@
-extends layout
-
-block content
-  h1= title
-  p Welcome to #{title}
-  form(action='/image/text', method='post')
-     input(id='image',name='image',type='text',value='',placeholder='@')
-     input(type='submit',value='Submit')
