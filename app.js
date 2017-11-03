@@ -8,7 +8,7 @@ require('dotenv').config()
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var message = require('./routes/message')
+var message = require('./routes/message');
 
 
 var app = express();
