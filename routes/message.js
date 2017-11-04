@@ -1,4 +1,6 @@
 var express = require('express');
+var bodyParser = require('body-parser');
+var validator = require('express-validator');
 var router = express.Router();
 var axios = require('axios');
 
@@ -26,13 +28,40 @@ router.post('/image', function(req, res) {
   res.render('messageImage', { title: 'Image Mode' });
 })
 
-//Receive on POST and send message to traffic sign (for /message/manual)
+// Receive on POST and send message to traffic sign (for /message/manual)
 router.post('/manual', function(req, res, next) {
+
+  // log the req message
   console.log(req.body.message);
-  axios.post(process.env.ROAD_SIGN_URL, {
-    'message': req.body.message
-  })
-  res.render('messageManual', { title: 'Manual Mode' });
+
+  // check that req message matches regex [0-1]{2592} ie. binary string of length 2592
+  req.checkBody("message", "Please enter a valid binary string. See above for details.").matches(/^[0-1]{2592}$/, "i");
+
+  // log errors
+  var errors = req.validationErrors();
+  console.log(errors);
+
+  // if there are errors
+  if (errors) {
+    // render with error flash
+    res.render('messageManual', {
+      title: 'Manual Mode',
+      flash: { type: 'alert-danger', messages: errors}
+    });
+  }
+
+  // if no errors
+  else {
+    // post to our road sign app
+    axios.post(process.env.ROAD_SIGN_URL, {
+      'message': req.body.message
+    });
+    // render with success flash
+    res.render('messageManual', {
+      title: 'Manual Mode',
+      flash: { type: 'alert-success', messages: [ { msg: 'Succeess!' }]}
+    });
+  }
 });
 
 module.exports = router;
