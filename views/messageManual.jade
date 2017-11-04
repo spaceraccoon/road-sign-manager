@@ -2,7 +2,9 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  p Welcome to #{title}. Please submit your manual input for the road sign. It must be a binary string of length 2592.
   form(action='/message/manual', method='post')
      input(id='message',name='message',type='text',value='',placeholder='@')
      input(type='submit',value='Submit')
+     p
+     include flashes
