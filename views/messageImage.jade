@@ -3,6 +3,6 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
-  form(action='/message/text', method='post')
+  form(action='/message/image', method='post')
      input(id='message',name='message',type='text',value='',placeholder='@')
      input(type='submit',value='Submit')
