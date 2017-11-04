@@ -59,7 +59,7 @@ router.post('/manual', function(req, res, next) {
     // render with success flash
     res.render('messageManual', {
       title: 'Manual Mode',
-      flash: { type: 'alert-success', messages: [ { msg: 'Succeess!' }]}
+      flash: { type: 'alert-success', messages: [ { msg: 'Success!' }]}
     });
   }
 });
