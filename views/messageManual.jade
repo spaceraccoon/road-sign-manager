@@ -4,5 +4,6 @@ block content
   h1= title
   p Welcome to #{title}
   form(action='/message/manual', method='post')
-     input(id='message',name='message',type='text',value='',placeholder='@')
+     textarea(rows='5',cols='50',id='message',name='message',type='text',value='',placeholder='@')
+     br     
      input(type='submit',value='Submit')
