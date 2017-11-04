@@ -1,4 +1,4 @@
-extends layout
+extends grid
 
 block content
   h1= title
@@ -6,3 +6,7 @@ block content
   form(action='/message/text', method='post')
      input(id='message',name='message',type='text',value='',placeholder='@')
      input(type='submit',value='Submit')
+
+     .flex-container
+       - for (var x = 1; x < 47; x++)
+         .flex-item= x
