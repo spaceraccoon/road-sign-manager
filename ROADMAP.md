@@ -5,10 +5,10 @@ Road Sign Manager is a Code4Good at Yale, MakeHaven and New Haven collaborative 
 
 ## MVP (End-December)
 1. Core Features
-  1. ~~Manual Input~~
-    1. ~~Accept binary string input~~
-    2. ~~Validate input~~
-    3. ~~Send to road sign~~
+  * ~~Manual Input~~
+    * ~~Accept binary string input~~
+    * ~~Validate input~~
+    * ~~Send to road sign~~
   2. Text Input
     1. ~~Accept text input~~
     2. Validate input
