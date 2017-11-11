@@ -5,6 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var validator = require('express-validator');
+var pixels = require("get-pixels")('./helpers/transformImage.js')
+
 require('dotenv').config()
 
 var index = require('./routes/index');
