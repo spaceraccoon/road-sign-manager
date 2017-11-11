@@ -1,13 +1,14 @@
 extends grid
 
 block content
-  h1= title
-  p Welcome to #{title}
+  .container
+      h1= title
+      p Welcome to #{title}
+
   form(action='/message/manual', method='post')
-     input(id='message',name='message',type='text',value='',placeholder='@')
-     input(type='submit',value='Submit')
-
-
-     .flex-container
-       - for (var x = 1; x < 47; x++)
-         .flex-item= x
+    .container
+      .row
+        .col-md
+          input(id='message',name='message',type='text',value='',placeholder='@')
+        .col-md
+          input(type='submit',value='Submit')

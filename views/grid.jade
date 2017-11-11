@@ -12,9 +12,9 @@ html(lang='en')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js', integrity='sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ', crossorigin='anonymous')
 
   body
-    .flex-container
-      - for (var x = 1; x < 50; x++)
-        .flex-item= x
+    .container
+      .row
+        .col-sm
 
 
   block content

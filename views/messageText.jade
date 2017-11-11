@@ -3,10 +3,11 @@ extends grid
 block content
   h1= title
   p Welcome to #{title}
-  form(action='/message/text', method='post')
-     input(id='message',name='message',type='text',value='',placeholder='@')
-     input(type='submit',value='Submit')
 
-     .flex-container
-       - for (var x = 1; x < 47; x++)
-         .flex-item= x
+  form(action='/message/text', method='post')
+    .container
+      .row
+        .col-sm
+          input(id='message',name='message',type='text',value='',placeholder='@')
+        .col-sm
+          input(type='submit',value='Submit')
