@@ -40,7 +40,7 @@ router.post('/image', function(req, res) {
 	});
 	// render with success flash
 	res.render('messageImage', {
-		title: 'Image Mode',
+		title: 'Manual Mode',
 		flash: { type: 'alert-success', messages: [ { msg: 'Success!' }]}
 	});
 })
