@@ -6,9 +6,9 @@ module.exports = function test(text) {
 
 	const { document } = (new JSDOM(`...`)).window;
 	
-    var buffer = document.createElement('canvas');
-    
-    console.log("buffer: "+buffer);
+	var buffer = document.createElement('canvas');
+	
+	console.log("buffer: "+buffer);
 
 	var bufContext = buffer.getContext('2d');
 
@@ -51,4 +51,4 @@ module.exports = function test(text) {
 	}
 	console.log(answer);
 	console.log(answer.split(" ").length);
-    }
+}
