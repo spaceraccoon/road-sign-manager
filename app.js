@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var validator = require('express-validator');
 require('dotenv').config()
 
+
 var index = require('./routes/index');
 var message = require('./routes/message')
 
