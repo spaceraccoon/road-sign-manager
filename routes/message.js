@@ -21,7 +21,7 @@ router.get('/image', function(req, res, next) {
 //Receive on POST and console logs message (for /message/text)
 router.post('/text', function(req, res) {
   console.log(req.body.message);
-  textTransform(req.body.message);
+  console.log(textTransform(req.body.message));
   res.render('messageText', { title: 'Text Mode' });
 });
 

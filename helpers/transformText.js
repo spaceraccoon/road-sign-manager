@@ -47,6 +47,7 @@ module.exports = function test(text) {
 			answer = answer + bitmap[x][y] + " ";
 		}
 	}
-	console.log(answer);
-	console.log(answer.split(" ").length);
+
+	//console.log(answer.split(" ").length);
+	return answer;
 }
