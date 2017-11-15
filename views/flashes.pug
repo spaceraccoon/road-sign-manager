@@ -1,5 +1,5 @@
 if flash
-  div.alert(class='#{flash.type}')
+  div.alert(class=flash.type)
     ul
     - for (var i = 0; i < flash.messages.length; i++) {
         p #{flash.messages[i].msg}
