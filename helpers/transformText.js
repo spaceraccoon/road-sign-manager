@@ -44,10 +44,16 @@ module.exports = function test(text) {
 	var answer = "";
 	for (var y=0; y<27; y++) {
 		for (var x=0; x<96; x++) {
-			answer = answer + bitmap[x][y] + " ";
+			if (bitmap[x][y]){
+				answer = answer + 1;
+			}
+			else {
+				answer = answer + 0;
+			}
+
 		}
 	}
-
-	//console.log(answer.split(" ").length);
+	//console.log(text);
+	//console.log(answer.length);
 	return answer;
 }
