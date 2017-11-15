@@ -7,14 +7,12 @@ module.exports = function test(text) {
 	const { document } = (new JSDOM(`...`)).window;
 	
 	var buffer = document.createElement('canvas');
-	
-	console.log("buffer: "+buffer);
+
 
 	var bufContext = buffer.getContext('2d');
 
 	buffer.width = 96;
 	buffer.height = 27;
-	console.log("bufferContext: "+bufContext);
 
 	bufContext.fillStyle = "#FFFFFF";
 	bufContext.fillRect(0, 0, 96, 27);
@@ -23,7 +21,7 @@ module.exports = function test(text) {
 	bufContext.font = "12px verdana";
 
 	bufContext.fillStyle = "#000000";
-	bufContext.fillText("hi", 0, 0);
+	bufContext.fillText(text, 0, 0);
 
 	var img = bufContext.getImageData(0, 0, 96, 27);
 
@@ -46,7 +44,7 @@ module.exports = function test(text) {
 	var answer = "";
 	for (var y=0; y<27; y++) {
 		for (var x=0; x<96; x++) {
-			answer = answer + " " + bitmap[x][y];
+			answer = answer + bitmap[x][y] + " ";
 		}
 	}
 	console.log(answer);
