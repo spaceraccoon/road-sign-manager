@@ -5,7 +5,7 @@ module.exports = function test(text) {
 
 
 	const { document } = (new JSDOM(`...`)).window;
-	
+
 	var buffer = document.createElement('canvas');
 
 
