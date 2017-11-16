@@ -8,6 +8,7 @@ var validator = require('express-validator');
 
 require('dotenv').config()
 
+
 var index = require('./routes/index');
 var message = require('./routes/message')
 
@@ -15,7 +16,7 @@ var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

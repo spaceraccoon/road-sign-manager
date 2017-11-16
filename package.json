@@ -8,14 +8,20 @@
   "dependencies": {
     "axios": "^0.17.0",
     "body-parser": "~1.18.2",
+    "canvas-prebuilt": "^1.6.5-prerelease.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "dotenv": "^4.0.0",
     "express": "~4.15.5",
     "express-validator": "^4.3.0",
+<<<<<<< HEAD
     "get-pixels": "^3.3.0",
     "jade": "~1.11.0",
+=======
+    "jsdom": "^11.3.0",
+>>>>>>> 8a57e09235e4c03cf515dcb7e7a5990be1477b0a
     "morgan": "~1.9.0",
+    "pug": "^2.0.0-rc.4",
     "serve-favicon": "~2.4.5"
   }
 }
