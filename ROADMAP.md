@@ -12,12 +12,12 @@ Road Sign Manager is a Code4Good at Yale, MakeHaven and New Haven collaborative 
    2. Text Input
       1. ~~Accept text input~~
       2. Validate input
-      3. Transform input to binary string
+      3. ~~Transform input to binary string~~
       4. Send to road sign
    3. Image Input
-      1. Accept image input
+      1. ~~Accept image input~~
       2. Validate input
-      3. Transform input to binary string
+      3. ~~Transform input to binary string~~
       4. Send to road sign
    4. API Input
       1. Automatically receive API data
