@@ -1,48 +1,73 @@
 var getPixels = require("get-pixels")
 var ndarray = require("ndarray")
 
+// jpg test
+// https://secure.gravatar.com/avatar/90e9dac0543d142d0dbbfb1f6e9523c8?s=96&d=mm&r=pg
+
+// png test
+// http://icons.iconarchive.com/icons/graphicloads/100-flat-2/96/email-icon.png
+
+// function to export to message.js
 function transformImage(imageURL) {
+	return new Promise(function(fulfill, reject) {
+		pixelGetter(imageURL).then(function(res) {
+			console.log(res);
+			fulfill(res);
+		}).catch(function(err) {
+			reject(err);
+		});
+	});
+}
 
-	getPixels(imageURL, function(err, pixels) {
-		if (err) {
-			console.log("Bad image path");
-			return;
-		}
-		console.log("got pixels", pixels.shape.slice());
+// wrapper to get pixels of image at buffer
+function pixelGetter(imageURL) {
+	return new Promise(function(fulfill, reject) {
+		getPixels(imageURL, function(err, pixels) {
+			if (err) {
+				console.log("Bad image path");
+				reject(err);
+			}
+			else {
+				string = processPixels(pixels);
+				fulfill(string);
+			}
+		});
+	})
+}
 
-		var binString = "";
-		var image = "";
-		var threshold = 140;
-		var image_width = 96;
-		var image_height = 27;
+// function to process the pixels
+// pixels is represented in ndarray
+function processPixels(pixels) {
 
-		var width = pixels.shape[0], height = pixels.shape[1]
-		console.log(pixels.shape);
-		for (var i = 0; i < image_height; i++) {
-			for (var j = 0; j < image_width; j++) {
-				rgb = [];
-				for (var k = 0; k < 3; k++) {
-						rgb.push(pixels.get(i, j, k));
-						// binString.concat((rgb & 0xff000000).toString());
-				}
-				if (rgb[0] < threshold || rgb[1] < threshold || rgb[2] < threshold)
-				{
-						binString += "1";
-				}
-				else
-				{
-						binString += "0";
-				}
+	// initialise parameters
+	var binString = "";
+	var threshold = 170;
+	var image_width = 96;
+	var image_height = 27;
+	var height_offset = 30;
+
+	// iterate over height and width
+	for (var i = height_offset; i < image_height + height_offset; i++) {
+		for (var j = 0; j < image_width; j++) {
+
+			// create list of the rgb triple
+			rgb = [];
+			for (var k = 0; k < 4; k++) {
+					rgb.push(pixels.get(j, i, k));
+			}
+
+			// set string to 1 if any rgb value below threshold and opacity not 0 (for png)
+			if ((rgb[0] < threshold || rgb[1] < threshold || rgb[2] < threshold) && rgb[3] != 0)
+			{
+					binString += "1";
+			}
+			else
+			{
+					binString += "0";
 			}
 		}
-		console.log(binString.length);
-		return binString;
-	});
-
+	}
+	return binString;
 }
 
 module.exports = transformImage;
-// https://secure.gravatar.com/avatar/6c96a0adccf3dfa55695b0fead298d7f?s=96&d=mm&r=pg
-// http://iconshow.me/media/images/xmas/standard-new-year-icons/128/Snowflake-icon.png
-// image = "https://pbs.twimg.com/profile_images/839721704163155970/LI_TRk1z_400x400.jpg"
-// transformImage(image);

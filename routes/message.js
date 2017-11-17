@@ -32,20 +32,39 @@ router.post('/image', function(req, res) {
 	// log req message
   console.log(req.body.message);
 
-	// check req message for valid URL later
+  // (attempt to) transform image using the valid URL
+  transformImage(req.body.message).then(function(binaryString) {
 
-	// log any errors
-	binaryString = transformImage(req.body.message);
-	// post to our road sign app
-	axios.post(process.env.ROAD_SIGN_URL, {
-		'message': binaryString
-	});
-	// render with success flash
-	res.render('messageImage', {
-		title: 'Manual Mode',
-		flash: { type: 'alert-success', messages: [ { msg: 'Success!' }]}
-	});
-})
+    // log string
+    console.log(binaryString);
+
+  	// post to our road sign app
+  	axios.post(process.env.ROAD_SIGN_URL, {
+  		'message': binaryString
+  	});
+
+  	// render with success flash
+  	res.render('messageImage', {
+  		title: 'Manual Mode',
+  		flash: { type: 'alert-success', messages: [ { msg: 'Success!' }]}
+  	});
+
+    // error checking
+  }).catch(function(err) {
+
+    console.log(err);
+    console.log("unable to load image");
+
+    // render with error flash
+    res.render('messageImage', {
+      title: 'Image Mode',
+      flash: { type: 'alert-danger', messages: [ { msg: 'Failed to Convert Image!' }]}
+    });
+
+  });
+});
+
+
 
 // Receive on POST and send message to traffic sign (for /message/manual)
 router.post('/manual', function(req, res, next) {
