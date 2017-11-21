@@ -15,8 +15,7 @@ function transformText(text) {
 	bufContext.fillRect(0, 0, 96, 27);
 
 	bufContext.textBaseline = 'top';
-	bufContext.font = '12px verdana';
-
+	bufContext.font = '12px arial';
 	bufContext.fillStyle = '#000000';
 	bufContext.fillText(text, 0, 0);
 
