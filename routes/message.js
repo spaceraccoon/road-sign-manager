@@ -1,103 +1,96 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var validator = require('express-validator');
-var router = express.Router();
-var axios = require('axios');
-var textTransform = require('../helpers/transformText.js')
+const express = require('express');
+const bodyParser = require('body-parser');
+const validator = require('express-validator');
+const router = express.Router();
+const axios = require('axios');
+const transformText = require('../helpers/transformText.js')
+const transformImage = require('../helpers/transformImage');
 
-var transformImage = require('../helpers/transformImage');
-
-/* GET home page. */
+/* GET manual message page. */
 router.get('/manual', function(req, res, next) {
   res.render('messageManual', { title: 'Manual Mode' });
 });
 
+/* GET text message page. */
 router.get('/text', function(req, res, next) {
   res.render('messageText', { title: 'Text Mode' });
 });
 
+/* GET image message page. */
 router.get('/image', function(req, res, next) {
   res.render('messageImage', { title: 'Image Mode' });
-})
-
-//Receive on POST and console logs message (for /message/text)
-router.post('/text', function(req, res) {
-  console.log(req.body.message);
-  console.log(textTransform(req.body.message));
-  res.render('messageText', { title: 'Text Mode' });
 });
 
-router.post('/image', function(req, res) {
-
-	// log req message
-  console.log(req.body.message);
-
-  // (attempt to) transform image using the valid URL
-  transformImage(req.body.message).then(function(binaryString) {
-
-    // log string
-    console.log(binaryString);
-
-  	// post to our road sign app
-  	axios.post(process.env.ROAD_SIGN_URL, {
-  		'message': binaryString
-  	});
-
-  	// render with success flash
-  	res.render('messageImage', {
-  		title: 'Manual Mode',
-  		flash: { type: 'alert-success', messages: [ { msg: 'Success!' }]}
-  	});
-
-    // error checking
-  }).catch(function(err) {
-
-    console.log(err);
-    console.log("unable to load image");
-
-    // render with error flash
-    res.render('messageImage', {
-      title: 'Image Mode',
-      flash: { type: 'alert-danger', messages: [ { msg: 'Failed to Convert Image!' }]}
-    });
-
-  });
-});
-
-
-
-// Receive on POST and send message to traffic sign (for /message/manual)
+/* POST manual message and forwards binary string to road sign. */
 router.post('/manual', function(req, res, next) {
 
   // log the req message
   console.log(req.body.message);
 
-  // check that req message matches regex [0-1]{2592} ie. binary string of length 2592
+  // Check that req message matches regex [0-1]{2592} ie. binary string of length 2592
   req.checkBody("message", "Please enter a valid binary string. See above for details.").matches(/^[0-1]{2592}$/, "i");
-
-  // log errors
   var errors = req.validationErrors();
   console.log(errors);
 
-  // if there are errors
   if (errors) {
-    // render with error flash
     res.render('messageManual', {
       title: 'Manual Mode',
       flash: { type: 'alert-danger', messages: errors}
     });
-  }
-
-  // if no errors
-  else {
-    // post to our road sign app
+  } else {
     axios.post(process.env.ROAD_SIGN_URL, {
       'message': req.body.message
     });
-    // render with success flash
     res.render('messageManual', {
       title: 'Manual Mode',
       flash: { type: 'alert-success', messages: [ { msg: 'Success!' }]}
+    });
+  }
+});
+
+/* POST text message and forwards converted binary string to road sign. */
+router.post('/text', async function(req, res) {
+  res.render('messageText', { title: 'Text Mode' });
+  try {
+    let message = await transformText(req.body.message);
+    try {
+      await axios.post(process.env.ROAD_SIGN_URL, { message });
+    } catch (e) {
+      throw e;
+    }
+    res.render('messageText', {
+  		title: 'Text Mode',
+  		flash: { type: 'alert-success', messages: [{ msg: 'Success!' }]}
+  	});
+  } catch(e) {
+    console.log(e);
+
+    res.render('messageText', {
+      title: 'Text Mode',
+      flash: { type: 'alert-danger', messages: [{ msg: 'Failed to convert text!' }]}
+    });
+  }
+});
+
+/* POST image URL message and forwards converted binary string to road sign. */
+router.post('/image', async function(req, res) {
+  try {
+    let message = await transformImage(req.body.message);
+    try {
+      await axios.post(process.env.ROAD_SIGN_URL, { message });
+    } catch (e) {
+      throw e;
+    }
+    res.render('messageImage', {
+  		title: 'Image Mode',
+  		flash: { type: 'alert-success', messages: [ { msg: 'Success!' }]}
+  	});
+  } catch(e) {
+    console.log(e);
+
+    res.render('messageImage', {
+      title: 'Image Mode',
+      flash: { type: 'alert-danger', messages: [ { msg: 'Failed to convert image!' }]}
     });
   }
 });
