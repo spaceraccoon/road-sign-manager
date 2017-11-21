@@ -50,13 +50,12 @@ router.post('/manual', function(req, res, next) {
 
 /* POST text message and forwards converted binary string to road sign. */
 router.post('/text', async function(req, res) {
-  res.render('messageText', { title: 'Text Mode' });
   try {
     let message = await transformText(req.body.message);
     try {
       await axios.post(process.env.ROAD_SIGN_URL, { message });
     } catch (e) {
-      throw e;
+      console.log(e);
     }
     res.render('messageText', {
   		title: 'Text Mode',
