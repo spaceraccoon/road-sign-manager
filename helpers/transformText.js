@@ -3,8 +3,11 @@ const canvas = require('canvas-prebuilt');
 const { JSDOM } = jsdom;
 const { document } = (new JSDOM(`...`)).window;
 
-function transformText(lines) {
+function transformText(line1, line2) {
 	var binaryarr = [];
+	var lines =[line1, line2];
+	lines = lines.filter(line => line != '');
+	console.log(lines);
 	for (var i = 0; i<lines.length; i++){
 		var buffer = document.createElement('canvas');
 		var bufContext = buffer.getContext('2d');
