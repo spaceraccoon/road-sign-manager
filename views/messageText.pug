@@ -5,6 +5,8 @@ block content
   p Welcome to #{title}. Please enter your text input. For readability, capital letters are recommended. Any line longer than 12 characters will be cut off.
   include flashes
   form(action='/message/text', method='post')
-     textarea(rows='5',cols='50',id='message',name='message',type='text',value='',placeholder='Enter your text')
+     textarea(rows='1',cols='50',id='line1',name='line1',type='text',value='',placeholder='Line 1')
+     br
+     textarea(rows='1',cols='50',id='line2',name='line2',type='text',value='',placeholder='Line 2 (optional)')
      br
      input(type='submit',value='Submit')
