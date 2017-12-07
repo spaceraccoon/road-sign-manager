@@ -8,7 +8,6 @@ const {
 } = (new JSDOM(`...`)).window;
 
 function transformText(lines) {
-  var binaryarr = [];
   lines = lines.filter(line => line != '');
   var answer = '';
   for (var i = 0; i < lines.length; i++) {
@@ -40,6 +39,7 @@ function transformText(lines) {
       answer += 0;
     }
   }
+  console.log(answer);
   return answer;
 }
 
