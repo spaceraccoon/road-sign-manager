@@ -1,39 +1,46 @@
 const jsdom = require('jsdom');
 const canvas = require('canvas-prebuilt');
-const { JSDOM } = jsdom;
-const { document } = (new JSDOM(`...`)).window;
+const {
+  JSDOM
+} = jsdom;
+const {
+  document
+} = (new JSDOM(`...`)).window;
 
-function transformText(line1, line2) {
-	var binaryarr = [];
-	var lines =[line1, line2];
-	lines = lines.filter(line => line != '');
-	for (var i = 0; i<lines.length; i++){
-		var buffer = document.createElement('canvas');
-		var bufContext = buffer.getContext('2d');
-		var boxheight = lines.length;
-		buffer.width = 96;
-		buffer.height = 27/boxheight;
+function transformText(lines) {
+  var binaryarr = [];
+  lines = lines.filter(line => line != '');
+  var answer = '';
+  for (var i = 0; i < lines.length; i++) {
+    var buffer = document.createElement('canvas');
+    var bufContext = buffer.getContext('2d');
+    buffer.width = process.env.DISPLAY_WIDTH;
+    buffer.height = process.env.DISPLAY_HEIGHT / lines.length;
 
-		bufContext.fillStyle = '#FFFFFF';
-		bufContext.fillRect(0, 0, 96, 27/boxheight);
+    bufContext.fillStyle = '#FFFFFF';
+    bufContext.fillRect(0, 0, buffer.width, buffer.height);
 
-		bufContext.textBaseline = 'top';
-		bufContext.font = '12px arial';
-		bufContext.fillStyle = '#000000';
-		bufContext.fillText(lines[i], 0, 0);
+    bufContext.textBaseline = 'top';
+    bufContext.font = '12px arial';
+    bufContext.fillStyle = '#000000';
+    bufContext.fillText(lines[i], 0, 0);
 
-		var img = bufContext.getImageData(0, 0, 96, 27/boxheight);
+    var img = bufContext.getImageData(0, 0, buffer.width, buffer.height);
 
-		var answer = '';
-		for (var y=0; y<27/boxheight; y++) {
-			for (var x=0; x<96; x++) {
-				var whichPixel = 96*y + x;
-				answer += (img.data[4*whichPixel] < 140) ? 1 : 0; //If the red channel of the pixel is lower than 140, we consider it 'on'
-			}
-		}
-		binaryarr[i] = answer;
-	}
-	return binaryarr.join("");
+    for (var y = 0; y < buffer.height; y++) {
+      for (var x = 0; x < buffer.width; x++) {
+        var whichPixel = buffer.width * y + x;
+        answer += (img.data[4 * whichPixel] < 140) ? 1 : 0; //If the red channel of the pixel is lower than 140, we consider it 'on'
+      }
+    }
+  }
+  var remainder = process.env.DISPLAY_HEIGHT % lines.length;
+  for (var y = 0; y < remainder; y++) {
+    for (var x = 0; x < process.env.DISPLAY_WIDTH; x++) {
+      answer += 0;
+    }
+  }
+  return answer;
 }
 
 module.exports = transformText;

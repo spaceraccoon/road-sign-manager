@@ -56,7 +56,7 @@ router.post('/manual', async function(req, res, next) {
 /* POST text message and forwards converted binary string to road sign. */
 router.post('/text', async function(req, res) {
   try {
-    let message = await transformText(req.body.message1,req.body.message2);
+    let message = await transformText([req.body.message1, req.body.message2]);
     try {
       await axios.post(process.env.ROAD_SIGN_URL, { message });
     } catch (e) {
