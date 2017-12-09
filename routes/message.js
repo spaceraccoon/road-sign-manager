@@ -108,7 +108,7 @@ router.post('/manual', async function (req, res, next) {
 router.post('/text', async function (req, res) {
   try {
     clearInterval(req.app.locals.dataInterval);
-    req.app.locals.mode =modes.TEXT;
+    req.app.locals.mode = modes.TEXT;
     let message = await transformText([req.body.line1, req.body.line2]);
     await axios.post(process.env.ROAD_SIGN_URL, {
       message
@@ -143,7 +143,7 @@ router.post('/text', async function (req, res) {
 router.post('/image', async function (req, res) {
   try {
     clearInterval(req.app.locals.dataInterval);
-    req.app.locals.mode =modes.IMAGE;
+    req.app.locals.mode = modes.IMAGE;
     let message = await transformImage(req.body.message);
     await axios.post(process.env.ROAD_SIGN_URL, {
       message
@@ -178,7 +178,7 @@ router.post('/image', async function (req, res) {
 router.post('/data', async function (req, res) {
   try {
     clearInterval(req.app.locals.dataInterval);
-    req.app.locals.mode =modes.DATA;
+    req.app.locals.mode = modes.DATA;
     let data = await fetchData(garageIds[(req.body.message)]);
     let message = await transformText([data.name.toUpperCase(), `${data.free} Lots`.toUpperCase()]);
     await axios.post(process.env.ROAD_SIGN_URL, { message });
