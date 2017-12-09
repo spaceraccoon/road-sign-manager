@@ -1,36 +1,34 @@
-const getPixels = require("get-pixels")
+const jimp = require("jimp");
 
 function transformImage(imageURL) {
-	return new Promise(function(resolve, reject) {
-		getPixels(imageURL, function(err, pixels) {
-			if (err) {
-				reject(err);
-			}	else {
-				resolve(processPixels(pixels));
-			}
-		});
-	});
+  return new Promise(function (resolve, reject) {
+    jimp.read(imageURL, function(err, image) {
+      if (err) {
+        reject(err);
+      } else {
+        image.contain(parseInt(process.env.DISPLAY_WIDTH), parseInt(process.env.DISPLAY_HEIGHT), jimp.HORIZONTAL_ALIGN_CENTER | jimp.VERTICAL_ALIGN_MIDDLE);
+        resolve(processPixels(image));
+      }
+    });
+  });
 }
 
 // Converts pixels into a binary string based on a color threshold
-function processPixels(pixels) {
-	var binString = '';
-	const threshold = 170;
-	var height_offset = 30;
+function processPixels(image) {
+  var binString = '';
+  const threshold = 170;
 
-	for (var i = height_offset; i < parseInt(process.env.DISPLAY_HEIGHT) + height_offset; i++) {
-		for (var j = 0; j < parseInt(process.env.DISPLAY_WIDTH); j++) {
-			rgb = [];
-			for (var k = 0; k < 4; k++) {
-				rgb.push(pixels.get(j, i, k));
-			}
+  for (var i = 0; i < parseInt(process.env.DISPLAY_HEIGHT); i++) {
+    for (var j = 0; j < parseInt(process.env.DISPLAY_WIDTH); j++) {
+      hex = image.getPixelColor(j, i)
+      rgb = jimp.intToRGBA(hex)
 
-			// Set string to 1 if any rgb value below threshold and opacity not 0 (for png)
-			binString += ((rgb[0] < threshold || rgb[1] < threshold || rgb[2] < threshold) && rgb[3] != 0) ? 1 : 0;
-		}
-	}
+      // Set string to 1 if any rgb value below threshold and opacity not 0 (for png)
+      binString += ((rgb.r < threshold || rgb.g < threshold || rgb.b < threshold) && rgb.a != 0) ? 1 : 0;
+    }
+  }
 
-	return binString;
+  return binString;
 }
 
 module.exports = transformImage;

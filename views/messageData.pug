@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1 #{title}
+  p Welcome to #{title}. Please select a garage. Occupancy data will be fetched from the Smarking service every minute and sent to the road sign.
+  include flashes
+  form(action='/message/data', method='post')
+    .form-group
+      label(for='message') Garage
+      select.form-control.col-sm-4(id='message', name='message')
+        option(value='0') Air Rights Garage
+        option(value='1') Crown Street Garage
+        option(value='2') Orange and Elm Lot
+        option(value='3') Temple Medical Garage
+        option(value='4') Temple Street Garage
+        option(value='5') Union Stage Garage
+    button.btn.btn-primary(type='submit') Submit
