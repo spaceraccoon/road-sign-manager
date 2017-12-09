@@ -93,7 +93,7 @@ router.post('/manual', async function (req, res, next) {
     }
   } catch (e) {
     console.log(e);
-    res.render('messageText', {
+    res.render('messageManual', {
       title: 'Manual Mode',
       flash: {
         type: 'alert-danger',
