@@ -1,10 +1,11 @@
 extends layout
 
 block content
-  h1= title
+  h1 #{title}
   p Welcome to #{title}. Please enter your manual input for the road sign. It must be a binary string of length 2592.
   include flashes
   form(action='/message/manual', method='post')
-     textarea(rows='5',cols='50',id='message',name='message',type='text',value='',placeholder='Enter your manual message')
-     br
-     input(type='submit',value='Submit')
+    .form-group
+      label(for='message') Message
+      textarea.form-control(rows='5', id='message', name='message', placeholder='Enter your manual message')
+    button.btn.btn-primary(type='submit') Submit
