@@ -107,25 +107,32 @@ router.post('/manual', async function (req, res, next) {
 /* POST text message and forwards converted binary string to road sign. */
 router.post('/text', async function (req, res) {
   try {
-    clearInterval(req.app.locals.dataInterval);
-    req.app.locals.mode = modes.TEXT;
-    let message = await transformText([req.body.line1, req.body.line2]);
-    await axios.post(process.env.ROAD_SIGN_URL, {
-      message
-    });
-    res.render('messageText', {
-      title: 'Text Mode',
-      flash: {
-        type: 'alert-success',
-        messages: [{
-          msg: 'Success!'
-        }]
-      },
-      mode: req.app.locals.mode
-    });
+    // Check that each line is 12 or less letters long 
+    req.checkBody("line1", "Please enter a valid message. See above for details.").isLength(1, 12);
+    req.checkBody("line2", "Please enter a valid message. See above for details.").matches(0, 12);
+    var errors = req.validationErrors();
+    if (errors) {
+      throw (errors);
+    } else {
+      clearInterval(req.app.locals.dataInterval);
+      req.app.locals.mode = modes.TEXT;
+      let message = await transformText([req.body.line1, req.body.line2]);
+      await axios.post(process.env.ROAD_SIGN_URL, {
+        message
+      });
+      res.render('messageText', {
+        title: 'Text Mode',
+        flash: {
+          type: 'alert-success',
+          messages: [{
+            msg: 'Success!'
+          }]
+        },
+        mode: req.app.locals.mode
+      });
+    }
   } catch (e) {
     console.log(e);
-
     res.render('messageText', {
       title: 'Text Mode',
       flash: {
