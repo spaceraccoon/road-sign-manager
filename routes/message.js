@@ -23,12 +23,14 @@ const garageIds = {
   '5': 258289
 }
 
-const intervalHandler = async function(garageId) {
+const intervalHandler = async function (garageId) {
   try {
     let data = await fetchData(garageId);
     let message = await transformText([data.name.toUpperCase(), `${data.free} Lots`.toUpperCase()]);
     console.log(`${new Date().toISOString()}: ${data.name} has ${data.free} lots.`);
-    await axios.post(process.env.ROAD_SIGN_URL, { message });
+    await axios.post(process.env.ROAD_SIGN_URL, {
+      message
+    });
   } catch (e) {
     console.log(e);
   }
@@ -86,7 +88,7 @@ router.post('/manual', async function (req, res, next) {
           type: 'alert-success',
           messages: [{
             msg: 'Success!'
-          }]
+          }]  
         },
         mode: req.app.locals.mode
       });
@@ -108,8 +110,14 @@ router.post('/manual', async function (req, res, next) {
 router.post('/text', async function (req, res) {
   try {
     // Check that each line is 12 or less letters long 
-    req.checkBody("line1", "Please enter a valid message for line 1. See above for details.").isLength({ min: 1, max: 12 });
-    req.checkBody("line2", "Please enter a valid message for line 2. See above for details.").isLength({ min: 0, max: 12 });
+    req.checkBody("line1", "Please enter a valid message for line 1. See above for details.").isLength({
+      min: 1,
+      max: 12
+    });
+    req.checkBody("line2", "Please enter a valid message for line 2. See above for details.").isLength({
+      min: 0,
+      max: 12
+    });
     var errors = req.validationErrors();
     if (errors) {
       throw (errors);
@@ -137,7 +145,9 @@ router.post('/text', async function (req, res) {
       title: 'Text Mode',
       flash: {
         type: 'alert-danger',
-        messages: errors ? errors : [{ msg: 'Failed to convert text!' }]
+        messages: errors ? errors : [{
+          msg: 'Failed to convert text!'
+        }]
       },
       mode: req.app.locals.mode
     });
@@ -151,7 +161,7 @@ router.post('/image', async function (req, res) {
     req.checkBody("message", "Please enter a valid image URL, of type .png or .jpeg").matches(/^.*.(?:jpeg|png|jpg)$/, "i");
     var errors = req.validationErrors();
     if (errors) {
-      throw(errors);
+      throw (errors);
     } else {
       clearInterval(req.app.locals.dataInterval);
       req.app.locals.mode = modes.IMAGE;
@@ -172,12 +182,13 @@ router.post('/image', async function (req, res) {
     }
   } catch (e) {
     console.log(e);
-
     res.render('messageImage', {
       title: 'Image Mode',
       flash: {
         type: 'alert-danger',
-        messages: errors ? errors : [{ msg: 'Failed to convert image!' }]}
+        messages: errors ? errors : [{
+          msg: 'Failed to convert image!'
+        }]
       },
       mode: req.app.locals.mode
     });
@@ -191,7 +202,9 @@ router.post('/data', async function (req, res) {
     req.app.locals.mode = modes.DATA;
     let data = await fetchData(garageIds[(req.body.message)]);
     let message = await transformText([data.name.toUpperCase(), `${data.free} Lots`.toUpperCase()]);
-    await axios.post(process.env.ROAD_SIGN_URL, { message });
+    await axios.post(process.env.ROAD_SIGN_URL, {
+      message
+    });
     req.app.locals.dataInterval = setInterval(intervalHandler, 60000, garageIds[(req.body.message)]);
     res.render('messageData', {
       title: 'Data Mode',
