@@ -147,22 +147,29 @@ router.post('/text', async function (req, res) {
 /* POST image URL message and forwards converted binary string to road sign. */
 router.post('/image', async function (req, res) {
   try {
-    clearInterval(req.app.locals.dataInterval);
-    req.app.locals.mode = modes.IMAGE;
-    let message = await transformImage(req.body.message);
-    await axios.post(process.env.ROAD_SIGN_URL, {
-      message
-    });
-    res.render('messageImage', {
-      title: 'Image Mode',
-      flash: {
-        type: 'alert-success',
-        messages: [{
-          msg: 'Success!'
-        }]
-      },
-      mode: req.app.locals.mode
-    });
+    // Check that req message url is of type .png or .jpeg
+    req.checkBody("message", "Please enter a valid image URL, of type .png or .jpeg").matches(/^.*.(?:jpeg|png|jpg)$/, "i");
+    var errors = req.validationErrors();
+    if (errors) {
+      throw(errors);
+    } else {
+      clearInterval(req.app.locals.dataInterval);
+      req.app.locals.mode = modes.IMAGE;
+      let message = await transformImage(req.body.message);
+      await axios.post(process.env.ROAD_SIGN_URL, {
+        message
+      });
+      res.render('messageImage', {
+        title: 'Image Mode',
+        flash: {
+          type: 'alert-success',
+          messages: [{
+            msg: 'Success!'
+          }]
+        },
+        mode: req.app.locals.mode
+      });
+    }
   } catch (e) {
     console.log(e);
 
@@ -170,9 +177,7 @@ router.post('/image', async function (req, res) {
       title: 'Image Mode',
       flash: {
         type: 'alert-danger',
-        messages: [{
-          msg: 'Failed to convert image!'
-        }]
+        messages: errors ? errors : [{ msg: 'Failed to convert image!' }]}
       },
       mode: req.app.locals.mode
     });
