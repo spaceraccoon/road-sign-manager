@@ -8,7 +8,6 @@ function transformImage(imageURL) {
       }
       else {
         image.contain(parseInt(process.env.DISPLAY_WIDTH), parseInt(process.env.DISPLAY_HEIGHT), jimp.HORIZONTAL_ALIGN_CENTER | jimp.VERTICAL_ALIGN_MIDDLE);
-        image.write("image.jpg");
         resolve(processPixels(image));
       }
     });
