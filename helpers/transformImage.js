@@ -5,8 +5,7 @@ function transformImage(imageURL) {
     jimp.read(imageURL, function(err, image) {
       if (err) {
         reject(err);
-      }
-      else {
+      } else {
         image.contain(parseInt(process.env.DISPLAY_WIDTH), parseInt(process.env.DISPLAY_HEIGHT), jimp.HORIZONTAL_ALIGN_CENTER | jimp.VERTICAL_ALIGN_MIDDLE);
         resolve(processPixels(image));
       }
