@@ -1,9 +1,11 @@
 extends layout
 
 block content
-  h1= title
+  h1 #{title}
   p Welcome to #{title}. Please enter your image URL for the road sign. Any pixel other than white or transparent will turn on its corresponding pixel on the road sign.
   include flashes
   form(action='/message/image', method='post')
-    input(id='message', name='message', type='text', value='', placeholder='Enter your image URL')
-    input(type='submit',value='Submit')
+    .form-group
+      label(for='message') Image URL
+      input.form-control.col-sm-4(id='message', name='message', type='text', placeholder='Enter your image URL')
+    button.btn.btn-primary(type='submit') Submit

@@ -1,16 +1,14 @@
 doctype html
 html
   head
-    title= title
-    
-    meta( charset='utf-8' )
-    meta( http-equiv='X-UA-Compatible', content='IE=edge' )
-    meta( name='viewport', content='width=device-width, initial-scale=1.0' )
-    meta( name='description', content='Road Sign Manager' )
+    title #{title} - Road Sign Manager
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(name='description', content='Road Sign Manager')
 
     // Bootstrap
-    link( href='//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css', rel='stylesheet', integrity='sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb', crossorigin='anonymous')
-
+    link(href='//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css', rel='stylesheet', integrity='sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb', crossorigin='anonymous')
     // Stylesheet
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
@@ -44,7 +42,6 @@ html
             span.navbar-text Current Mode: DATA
           default
             span.navbar-text Current Mode: MANUAL
-
 
     div.container
       block content
