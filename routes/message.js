@@ -108,8 +108,8 @@ router.post('/manual', async function (req, res, next) {
 router.post('/text', async function (req, res) {
   try {
     // Check that each line is 12 or less letters long 
-    req.checkBody("line1", "Please enter a valid message. See above for details.").isLength(1, 12);
-    req.checkBody("line2", "Please enter a valid message. See above for details.").matches(0, 12);
+    req.checkBody("line1", "Please enter a valid message. See above for details.").isLength({ min: 1, max: 12 });
+    req.checkBody("line2", "Please enter a valid message. See above for details.").isLength({ min: 0, max: 12 });
     var errors = req.validationErrors();
     if (errors) {
       throw (errors);
@@ -137,9 +137,7 @@ router.post('/text', async function (req, res) {
       title: 'Text Mode',
       flash: {
         type: 'alert-danger',
-        messages: [{
-          msg: 'Failed to convert text!'
-        }]
+        messages: errors
       },
       mode: req.app.locals.mode
     });
