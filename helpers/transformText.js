@@ -1,11 +1,7 @@
 const jsdom = require('jsdom');
 const canvas = require('canvas-prebuilt');
-const {
-  JSDOM
-} = jsdom;
-const {
-  document
-} = (new JSDOM(`...`)).window;
+const { JSDOM } = jsdom;
+const { document } = (new JSDOM(`...`)).window;
 
 function transformText(lines) {
   lines = lines.filter(line => line != '');

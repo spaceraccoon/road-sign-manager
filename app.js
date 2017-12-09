@@ -48,4 +48,8 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+// app locals
+app.locals.mode = 0;
+app.locals.dataInterval = null;
+
 module.exports = app;
