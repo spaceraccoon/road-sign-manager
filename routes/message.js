@@ -76,42 +76,11 @@ router.post('/text', async function(req, res) {
   }
 });
 
-// router.post('/manual', async function(req, res, next) {
-//   try {
-//     // Check that req message matches regex [0-1]{2592} ie. binary string of length 2592
-//     req.checkBody("message", "Please enter a valid binary string. See above for details.").matches(/^[0-1]{2592}$/, "i");
-//     var errors = req.validationErrors();
-//
-//     if (errors) {
-//       throw(errors);
-//     } else {
-//       try {
-//         await axios.post(process.env.ROAD_SIGN_URL, {
-//           'message': req.body.message
-//         });
-//         res.render('messageManual', {
-//           title: 'Manual Mode',
-//           flash: { type: 'alert-success', messages: [ { msg: 'Success!' }]}
-//         });
-//       } catch (e) {
-//         throw e;
-//       }
-//     }
-//   } catch (e) {
-//     console.log(e);
-//
-//     res.render('messageText', {
-//       title: 'Manual Mode',
-//       flash: { type: 'alert-danger', messages: errors }
-//     });
-//   }
-// });
-
 /* POST image URL message and forwards converted binary string to road sign. */
 router.post('/image', async function(req, res) {
   try {
     // Check that req message url is of type .png or .jpeg
-    req.checkBody("message", "Please enter a valid image URL, of type .png or .jpeg").matches("\*.png"|"\*.jpeg");
+    req.checkBody("message", "Please enter a valid image URL, of type .png or .jpeg").matches(/^.*.(?:jpeg|png|jpg)$/, "i");
     var errors = req.validationErrors();
 
     if (errors) {
@@ -134,7 +103,7 @@ router.post('/image', async function(req, res) {
 
     res.render('messageImage', {
       title: 'Image Mode',
-      flash: { type: 'alert-danger', messages: errors}
+      flash: { type: 'alert-danger', messages: errors ? errors : [{ msg: 'Failed to convert image!' }]}
     });
   }
 });
