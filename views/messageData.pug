@@ -2,7 +2,7 @@ extends layout
 
 block content
   h1 #{title}
-  p Welcome to #{title}. If you turn on this mode, parking data for the selected garage will be fetched from the Smarking service every minute and sent to the road sign.
+  p Welcome to #{title}. Please select a garage. Occupancy data will be fetched from the Smarking service every minute and sent to the road sign.
   include flashes
   form(action='/message/data', method='post')
     .form-group
