@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "nodemon -e js,pug ./bin/www"
+    "dev": "nodemon -e js,pug ./bin/www",
+    "test": "jest"
   },
   "dependencies": {
     "axios": "^0.17.0",
@@ -22,6 +23,8 @@
     "serve-favicon": "~2.4.5"
   },
   "devDependencies": {
-    "nodemon": "^1.14.12"
+    "jest": "^22.2.2",
+    "nodemon": "^1.14.12",
+    "supertest": "^3.0.0"
   }
 }
