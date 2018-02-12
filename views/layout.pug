@@ -33,15 +33,15 @@ html
               a.dropdown-item(href='/message/data') Parking Data
         case mode
           when 0
-            span.navbar-text Current Mode: MANUAL
+            span.navbar-text.current-mode Current Mode: MANUAL
           when 1
-            span.navbar-text Current Mode: TEXT
+            span.navbar-text.current-mode Current Mode: TEXT
           when 2
-            span.navbar-text Current Mode: IMAGE
+            span.navbar-text.current-mode Current Mode: IMAGE
           when 3
-            span.navbar-text Current Mode: DATA
+            span.navbar-text.current-mode Current Mode: DATA
           default
-            span.navbar-text Current Mode: MANUAL
+            span.navbar-text.current-mode Current Mode: MANUAL
 
     div.container
       block content
