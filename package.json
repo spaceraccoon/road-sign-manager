@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "dev": "nodemon -e js,pug,css ./bin/www",
     "test": "jest",
-    "precommit": "eslint ."
+    "precommit": "eslint . --fix"
   },
   "dependencies": {
     "axios": "^0.17.0",
