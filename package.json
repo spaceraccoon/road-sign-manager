@@ -11,6 +11,7 @@
   "dependencies": {
     "axios": "^0.17.0",
     "body-parser": "~1.18.2",
+    "canvas-prebuilt": "^1.6.5-prerelease.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "dotenv": "^4.0.0",
@@ -23,8 +24,8 @@
   },
   "devDependencies": {
     "eslint": "^4.17.0",
-    "eslint-config-prettier": "^2.9.0",
     "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-prettier": "^2.6.0",
     "jest": "^22.2.2",
