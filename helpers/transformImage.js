@@ -18,7 +18,6 @@ function processPixels(image) {
           : 0;
     }
   }
-
   return binString;
 }
 
