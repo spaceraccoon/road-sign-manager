@@ -11,6 +11,7 @@ function transformImage(imageURL) {
           parseInt(process.env.DISPLAY_HEIGHT),
           jimp.HORIZONTAL_ALIGN_CENTER | jimp.VERTICAL_ALIGN_MIDDLE,
         );
+
         resolve(processPixels(image));
       }
     });
@@ -35,8 +36,6 @@ function processPixels(image) {
           : 0;
     }
   }
-
   return binString;
 }
-
 module.exports = transformImage;
