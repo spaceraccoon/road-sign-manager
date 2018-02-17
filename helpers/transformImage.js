@@ -13,7 +13,6 @@ function transformImage(imageURL) {
         );
 
         resolve(processPixels(image));
-
       }
     });
   });
