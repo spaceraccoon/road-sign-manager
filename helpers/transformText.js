@@ -3,10 +3,11 @@ const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 const { document } = new JSDOM('...').window;
 
-function transformText(lines) {
-  lines = lines.filter(line => line != '');
+function transformText(textlines) {
+  let lines = textlines;
+  lines = lines.filter(line => line !== '');
   let answer = '';
-  for (let i = 0; i < lines.length; i++) {
+  for (let i = 0; i < lines.length; i += 1) {
     const buffer = document.createElement('canvas');
     const bufContext = buffer.getContext('2d');
     buffer.width = process.env.DISPLAY_WIDTH;
@@ -22,16 +23,16 @@ function transformText(lines) {
 
     const img = bufContext.getImageData(0, 0, buffer.width, buffer.height);
 
-    for (var y = 0; y < buffer.height; y++) {
-      for (var x = 0; x < buffer.width; x++) {
+    for (let y = 0; y < buffer.height; y += 1) {
+      for (let x = 0; x < buffer.width; x += 1) {
         const whichPixel = buffer.width * y + x;
         answer += img.data[4 * whichPixel] < 140 ? 1 : 0; // If the red channel of the pixel is lower than 140, we consider it 'on'
       }
     }
   }
   const remainder = process.env.DISPLAY_HEIGHT % lines.length;
-  for (var y = 0; y < remainder; y++) {
-    for (var x = 0; x < process.env.DISPLAY_WIDTH; x++) {
+  for (let y = 0; y < remainder; y += 1) {
+    for (let x = 0; x < process.env.DISPLAY_WIDTH; x += 1) {
       answer += 0;
     }
   }
