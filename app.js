@@ -52,6 +52,6 @@ app.use((err, req, res) => {
 app.use((req, res, next) => {
   res.locals.mode = req.app.locals.mode;
   next();
-})
+});
 
 module.exports = app;

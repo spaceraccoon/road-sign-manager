@@ -41,28 +41,28 @@ async function intervalHandler(garageId) {
 /* GET manual mode page. */
 router.get('/manual', (req, res) => {
   res.render('messageManual', {
-    title: 'Manual Mode'
+    title: 'Manual Mode',
   });
 });
 
 /* GET text mode page. */
 router.get('/text', (req, res) => {
   res.render('messageText', {
-    title: 'Text Mode'
+    title: 'Text Mode',
   });
 });
 
 /* GET image mode page. */
 router.get('/image', (req, res) => {
   res.render('messageImage', {
-    title: 'Image Mode'
+    title: 'Image Mode',
   });
 });
 
 /* GET parking data mode page. */
 router.get('/data', (req, res) => {
   res.render('messageData', {
-    title: 'Data Mode'
+    title: 'Data Mode',
   });
 });
 
@@ -83,7 +83,7 @@ router.post('/manual', async (req, res) => {
       flash: {
         type: 'alert-danger',
         messages: errors,
-      }
+      },
     });
   } else {
     clearInterval(req.app.locals.dataInterval);
@@ -100,7 +100,7 @@ router.post('/manual', async (req, res) => {
             msg: 'Success!',
           },
         ],
-      }
+      },
     });
   }
 });
@@ -147,7 +147,7 @@ router.post('/text', async (req, res) => {
               msg: 'Success!',
             },
           ],
-        }
+        },
       });
     }
   } catch (e) {
@@ -161,7 +161,7 @@ router.post('/text', async (req, res) => {
             msg: 'Failed to convert text!',
           },
         ],
-      }
+      },
     });
   }
 });
@@ -197,7 +197,7 @@ router.post('/image', async (req, res) => {
               msg: 'Success!',
             },
           ],
-        }
+        },
       });
     }
   } catch (e) {
@@ -211,7 +211,7 @@ router.post('/image', async (req, res) => {
             msg: 'Failed to convert image!',
           },
         ],
-      }
+      },
     });
   }
 });
@@ -244,7 +244,7 @@ router.post('/data', async (req, res) => {
             msg: 'Success!',
           },
         ],
-      }
+      },
     });
   } catch (e) {
     console.error(e);
@@ -257,7 +257,7 @@ router.post('/data', async (req, res) => {
             msg: 'Failed to convert data!',
           },
         ],
-      }
+      },
     });
   }
 });
