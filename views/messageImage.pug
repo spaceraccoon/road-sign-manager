@@ -8,4 +8,5 @@ block content
     .form-group
       label(for='message') Image URL
       input.form-control.col-sm-4(id='message', name='message', type='text', placeholder='Enter your image URL')
-    button.btn.btn-primary(type='submit') Submit
+    button.btn.btn-primary(type='button' data-toggle='modal' data-target='#modalConfirmation') Submit
+    include modals.pug
