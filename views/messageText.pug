@@ -11,4 +11,5 @@ block content
     .form-group
       label(for='line2') Line 2
       input.form-control.col-sm-3(id='line2', name='line2', type='text', placeholder='Line 2 (optional)')
-    button.btn.btn-primary(type='submit') Submit
+    button.btn.btn-primary(type='button' data-toggle='modal' data-target='#modalConfirmation') Submit
+    include modals.pug
