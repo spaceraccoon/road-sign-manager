@@ -16,6 +16,10 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+// app locals
+app.locals.mode = 0;
+app.locals.dataInterval = null;
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -44,8 +48,10 @@ app.use((err, req, res) => {
   res.render('error');
 });
 
-// app locals
-app.locals.mode = 0;
-app.locals.dataInterval = null;
+// pass mode to all views
+app.use((req, res, next) => {
+  res.locals.mode = req.app.locals.mode;
+  next();
+})
 
 module.exports = app;

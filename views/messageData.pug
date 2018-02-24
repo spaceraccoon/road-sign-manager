@@ -14,4 +14,19 @@ block content
         option(value='3') Temple Medical Garage
         option(value='4') Temple Street Garage
         option(value='5') Union Stage Garage
-    button.btn.btn-primary(type='submit') Submit
+    button.btn.btn-primary(type="button" data-toggle="modal" data-target="#exampleModal")
+      | Submit
+
+    #exampleModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true")
+      .modal-dialog(role="document")
+        .modal-content
+          .modal-header
+            h5#exampleModalLabel.modal-title Confirmation
+            button.close(type="button" data-dismiss="modal" aria-label="Close")
+              span(aria-hidden="true") ×
+          .modal-body
+            | Are you sure you want to send this message?
+          .modal-footer
+            button.btn.btn-secondary(type="button" data-dismiss="modal") Cancel
+            button.btn.btn-primary(type="submit") Confirm
+

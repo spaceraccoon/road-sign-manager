@@ -41,32 +41,28 @@ async function intervalHandler(garageId) {
 /* GET manual mode page. */
 router.get('/manual', (req, res) => {
   res.render('messageManual', {
-    title: 'Manual Mode',
-    mode: req.app.locals.mode,
+    title: 'Manual Mode'
   });
 });
 
 /* GET text mode page. */
 router.get('/text', (req, res) => {
   res.render('messageText', {
-    title: 'Text Mode',
-    mode: req.app.locals.mode,
+    title: 'Text Mode'
   });
 });
 
 /* GET image mode page. */
 router.get('/image', (req, res) => {
   res.render('messageImage', {
-    title: 'Image Mode',
-    mode: req.app.locals.mode,
+    title: 'Image Mode'
   });
 });
 
 /* GET parking data mode page. */
 router.get('/data', (req, res) => {
   res.render('messageData', {
-    title: 'Data Mode',
-    mode: req.app.locals.mode,
+    title: 'Data Mode'
   });
 });
 
@@ -87,8 +83,7 @@ router.post('/manual', async (req, res) => {
       flash: {
         type: 'alert-danger',
         messages: errors,
-      },
-      mode: req.app.locals.mode,
+      }
     });
   } else {
     clearInterval(req.app.locals.dataInterval);
@@ -105,8 +100,7 @@ router.post('/manual', async (req, res) => {
             msg: 'Success!',
           },
         ],
-      },
-      mode: req.app.locals.mode,
+      }
     });
   }
 });
@@ -153,8 +147,7 @@ router.post('/text', async (req, res) => {
               msg: 'Success!',
             },
           ],
-        },
-        mode: req.app.locals.mode,
+        }
       });
     }
   } catch (e) {
@@ -168,8 +161,7 @@ router.post('/text', async (req, res) => {
             msg: 'Failed to convert text!',
           },
         ],
-      },
-      mode: req.app.locals.mode,
+      }
     });
   }
 });
@@ -205,8 +197,7 @@ router.post('/image', async (req, res) => {
               msg: 'Success!',
             },
           ],
-        },
-        mode: req.app.locals.mode,
+        }
       });
     }
   } catch (e) {
@@ -220,8 +211,7 @@ router.post('/image', async (req, res) => {
             msg: 'Failed to convert image!',
           },
         ],
-      },
-      mode: req.app.locals.mode,
+      }
     });
   }
 });
@@ -231,6 +221,7 @@ router.post('/data', async (req, res) => {
   try {
     clearInterval(req.app.locals.dataInterval);
     req.app.locals.mode = modes.DATA;
+    req.app.locals.garage = req.body.message;
     const data = await fetchData(garageIds[req.body.message]);
     const message = await transformText([
       data.name.toUpperCase(),
@@ -253,8 +244,7 @@ router.post('/data', async (req, res) => {
             msg: 'Success!',
           },
         ],
-      },
-      mode: req.app.locals.mode,
+      }
     });
   } catch (e) {
     console.error(e);
@@ -267,8 +257,7 @@ router.post('/data', async (req, res) => {
             msg: 'Failed to convert data!',
           },
         ],
-      },
-      mode: req.app.locals.mode,
+      }
     });
   }
 });
