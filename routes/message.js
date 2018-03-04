@@ -262,145 +262,143 @@ router.post('/data', async (req, res) => {
   }
 });
 
-router.post('/message/preview', async(req, res) => {
-  try {
-    switch(req.body.mode) {
-      case MANUAL:
-        try {
-          req
-            .checkBody(
-              'message',
-              'Please enter a valid binary string. See above for details.',
-            )
-            .matches(/^[0-1]{2592}$/, 'i');
-          const errors = req.validationErrors();
-          if (errors) {
-            throw errors;
-          }
-          else {
-            res.status(200).send('messageManual', {
-              title: 'Manual Mode',
-              messages: req.body.message;
-            })
-          }
+router.post('/preview', async(req, res) => {
+  console.log(req.body);
+  switch(req.body.mode) {
+    case modes.MANUAL:
+      try {
+        req
+          .checkBody(
+            'message',
+            'Please enter a valid binary string. See above for details.',
+          )
+          .matches(/^[0-1]{2592}$/, 'i');
+        const errors = req.validationErrors();
+        if (errors) {
+          throw errors;
         }
-        catch (errors) {
-          console.error(errors);
-          res.status(400).send('messageImage', {
-            title: 'Image Mode',
-            messages: errors
-            })
+        else {
+          res.status(200).send('messageManual', {
+            title: 'Manual Mode',
+            messages: req.body.message
+          })
         }
-      case TEXT:
-        try {
-          req
-            .checkBody(
-              'line1',
-              'Please enter a valid message for line 1. See above for details.',
-            )
-            .isLength({
-              min: 1,
-              max: 12,
-            });
-          req
-            .checkBody(
-              'line2',
-              'Please enter a valid message for line 2. See above for details.',
-            )
-            .isLength({
-              min: 0,
-              max: 12,
-            });
-          errors = req.validationErrors();
-          if (errors) {
-            throw errors;
-          } 
-          else {
-            clearInterval(req.app.locals.dataInterval);
-            req.app.locals.mode = modes.TEXT;
-            const message = await transformText([req.body.line1, req.body.line2]);
-            await axios.post(process.env.ROAD_SIGN_URL, {
-              message,
-            });
-            res.status(200).send('messageText', {
-              title: 'Text Mode',
-              messages: message
-            })
-          }
-        }
-        catch (errors) {
-          console.error(errors);
-          res.status(400).send('messageImage', {
-            title: 'Image Mode',
-            messages: errors
-            })
-        }
-      case IMAGE:
-        try { 
-          req
-            .checkBody(
-              'message',
-              'Please enter a valid image URL, of type .png or .jpeg',
-            )
-            .matches(/^.*.(?:jpeg|png|jpg)$/, 'i');
-          errors = req.validationErrors();
-          if (errors) {
-            throw errors;
-          } 
-          else {
-            clearInterval(req.app.locals.dataInterval);
-            req.app.locals.mode = modes.IMAGE;
-            const message = await transformImage(req.body.message);
-            await axios.post(process.env.ROAD_SIGN_URL, {
-              message,
-            });
-            res.status(200).send('messageImage', {
-              title: 'Image Mode',
-              messages: message
-            })
-          }
-        }
-        catch (errors) {
-          console.error(errors);
-          res.status(400).send('messageImage', {
-            title: 'Image Mode',
-            messages: errors
-            })
-        }
-      case DATA:
-        try {
+      }
+      catch (errors) {
+        console.error(errors);
+        res.status(400).send('messageImage', {
+          title: 'Image Mode',
+          messages: errors
+          })
+      }
+    case modes.TEXT:
+      try {
+        console.log("tried");
+        req
+          .checkBody(
+            'line1',
+            'Please enter a valid message for line 1. See above for details.',
+          )
+          .isLength({
+            min: 1,
+            max: 12,
+          });
+        req
+          .checkBody(
+            'line2',
+            'Please enter a valid message for line 2. See above for details.',
+          )
+          .isLength({
+            min: 0,
+            max: 12,
+          });
+        errors = req.validationErrors();
+        if (errors) {
+          throw errors;
+        } 
+        else {
           clearInterval(req.app.locals.dataInterval);
-          req.app.locals.mode = modes.DATA;
-          req.app.locals.garage = req.body.message;
-          const data = await fetchData(garageIds[req.body.message]);
-          const message = await transformText([
-            data.name.toUpperCase(),
-            `${data.free} Lots`.toUpperCase(),
-          ]);
+          req.app.locals.mode = modes.TEXT;
+          const message = await transformText([req.body.line1, req.body.line2]);
           await axios.post(process.env.ROAD_SIGN_URL, {
             message,
           });
-          req.app.locals.dataInterval = setInterval(
-            intervalHandler,
-            60000,
-            garageIds[req.body.message],
-          );
+          res.status(200).send('messageText', {
+            title: 'Text Mode',
+            messages: message
+          })
+        }
+      }
+      catch (errors) {
+        console.error(errors);
+        res.status(400).send('messageImage', {
+          title: 'Image Mode',
+          messages: errors
+          })
+      }
+    case modes.IMAGE:
+      try { 
+        req
+          .checkBody(
+            'message',
+            'Please enter a valid image URL, of type .png or .jpeg',
+          )
+          .matches(/^.*.(?:jpeg|png|jpg)$/, 'i');
+        errors = req.validationErrors();
+        if (errors) {
+          throw errors;
+        } 
+        else {
+          clearInterval(req.app.locals.dataInterval);
+          req.app.locals.mode = modes.IMAGE;
+          const message = await transformImage(req.body.message);
+          await axios.post(process.env.ROAD_SIGN_URL, {
+            message,
+          });
           res.status(200).send('messageImage', {
             title: 'Image Mode',
             messages: message
           })
         }
-        catch(errors) {
-          console.error(errors);
-          res.status(400).send('messageImage', {
-            title: 'Image Mode',
-            messages: errors
+      }
+      catch (errors) {
+        console.error(errors);
+        res.status(400).send('messageImage', {
+          title: 'Image Mode',
+          messages: errors
           })
-        }           
-    }
+      }
+    case modes.DATA:
+      try {
+        clearInterval(req.app.locals.dataInterval);
+        req.app.locals.mode = modes.DATA;
+        req.app.locals.garage = req.body.message;
+        const data = await fetchData(garageIds[req.body.message]);
+        const message = await transformText([
+          data.name.toUpperCase(),
+          `${data.free} Lots`.toUpperCase(),
+        ]);
+        await axios.post(process.env.ROAD_SIGN_URL, {
+          message,
+        });
+        req.app.locals.dataInterval = setInterval(
+          intervalHandler,
+          60000,
+          garageIds[req.body.message],
+        );
+        res.status(200).send('messageImage', {
+          title: 'Image Mode',
+          messages: message
+        })
+      }
+      catch(errors) {
+        console.error(errors);
+        res.status(400).send('messageImage', {
+          title: 'Image Mode',
+          messages: errors
+        })
+      }           
   }
 });
   
-res.send(data)
-
 module.exports = router;
