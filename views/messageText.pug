@@ -12,3 +12,42 @@ block content
       label(for='line2') Line 2
       input.form-control.col-sm-3(id='line2', name='line2', type='text', placeholder='Line 2 (optional)')
     button.btn.btn-primary(type='submit') Submit
+    button.btn.btn-primary(type='button', id='preview-button', onclick='preview()') Preview
+  h2 Display
+  div#display
+
+  script.
+    var preview = function() {
+      event.preventDefault()
+      var line1 = document.getElementById('line1').value
+      var line2 = document.getElementById('line2').value
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4) {
+          if (this.status == 200) {
+            previewDisplay(this.responseText.messages)
+          } else {
+            alert('Invalid input');
+          }
+        }
+      }
+      xhttp.open('POST', '/message/preview', true)
+      xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+      var obj = {line1: line1, line2: line2, mode: 1};
+      var myJSON = JSON.stringify(obj);
+      xhttp.send(myJSON)  
+    }
+
+    var previewDisplay = function(message) {
+      var display = document.getElementById('display')
+      while (display.hasChildNodes()) {
+        display.removeChild(display.lastChild)
+      }
+      var bitArray = message.split('').map(Number)
+      var display = document.getElementById('display')
+      bitArray.forEach(function(element) {
+        var cell = document.createElement('div')
+        cell.className = element == 1 ? 'on' : 'off'
+        display.appendChild(cell)
+      })
+    }
