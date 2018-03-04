@@ -291,9 +291,9 @@ router.post('/preview', async(req, res) => {
           messages: errors
           })
       }
+      break;
     case modes.TEXT:
       try {
-        console.log("tried");
         req
           .checkBody(
             'line1',
@@ -323,7 +323,8 @@ router.post('/preview', async(req, res) => {
           await axios.post(process.env.ROAD_SIGN_URL, {
             message,
           });
-          res.status(200).send('messageText', {
+          console.log("sending response");
+          res.status(200).json({
             title: 'Text Mode',
             messages: message
           })
@@ -331,11 +332,12 @@ router.post('/preview', async(req, res) => {
       }
       catch (errors) {
         console.error(errors);
-        res.status(400).send('messageImage', {
+        res.status(400).json({
           title: 'Image Mode',
           messages: errors
           })
       }
+      break;
     case modes.IMAGE:
       try { 
         req
@@ -355,7 +357,7 @@ router.post('/preview', async(req, res) => {
           await axios.post(process.env.ROAD_SIGN_URL, {
             message,
           });
-          res.status(200).send('messageImage', {
+          res.status(200).json({
             title: 'Image Mode',
             messages: message
           })
@@ -363,11 +365,12 @@ router.post('/preview', async(req, res) => {
       }
       catch (errors) {
         console.error(errors);
-        res.status(400).send('messageImage', {
+        res.status(400).json({
           title: 'Image Mode',
           messages: errors
           })
       }
+      break;
     case modes.DATA:
       try {
         clearInterval(req.app.locals.dataInterval);
@@ -386,18 +389,19 @@ router.post('/preview', async(req, res) => {
           60000,
           garageIds[req.body.message],
         );
-        res.status(200).send('messageImage', {
+        res.status(200).json({
           title: 'Image Mode',
           messages: message
         })
       }
       catch(errors) {
         console.error(errors);
-        res.status(400).send('messageImage', {
+        res.status(400).json({
           title: 'Image Mode',
           messages: errors
         })
       }           
+      break;
   }
 });
   
