@@ -12,30 +12,31 @@ block content
       label(for='line2') Line 2
       input.form-control.col-sm-3(id='line2', name='line2', type='text', placeholder='Line 2 (optional)')
     button.btn.btn-primary(type='submit') Submit
-    button.btn.btn-primary(type='button', id='preview-button', onclick='preview()') Preview
+    button.btn.btn-primary(type='button', id='preview-button', onclick='preview(event)') Preview
   h2 Display
   div#display
 
   script.
-    var preview = function() {
+    var preview = function(event) {
       event.preventDefault()
       var line1 = document.getElementById('line1').value
       var line2 = document.getElementById('line2').value
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function() {
+        console.log("readyState == " + this.readyState);
         if (this.readyState == 4) {
           if (this.status == 200) {
-            previewDisplay(this.responseText.messages)
+            var response = JSON.parse(this.responseText)
+            console.log(response.messages)
+            previewDisplay(response.messages)
           } else {
             alert('Invalid input');
           }
         }
       }
       xhttp.open('POST', '/message/preview', true)
-      xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
-      var obj = {line1: line1, line2: line2, mode: 1};
-      var myJSON = JSON.stringify(obj);
-      xhttp.send(myJSON)  
+      xhttp.setRequestHeader('Content-type', 'application/json')
+      xhttp.send(JSON.stringify({line1: line1, line2: line2, mode: 1}))  
     }
 
     var previewDisplay = function(message) {
