@@ -278,7 +278,6 @@ router.post('/preview', async(req, res) => {
           throw errors;
         } else {
           res.status(200).json({
-            title: 'Manual Mode',
             errors: null,
             message: req.body.message,
           });
@@ -287,7 +286,6 @@ router.post('/preview', async(req, res) => {
       catch (errors) {
         console.error(errors);
         res.status(400).json({
-          title: 'Manual Mode',
           errors: errors,
           message: null
           })
@@ -321,9 +319,7 @@ router.post('/preview', async(req, res) => {
           clearInterval(req.app.locals.dataInterval);
           req.app.locals.mode = modes.TEXT;
           const message = await transformText([req.body.line1, req.body.line2]);
-          console.log("sending response");
           res.status(200).json({
-            title: 'Text Mode',
             errors: null,
             message: message
           });
@@ -332,7 +328,6 @@ router.post('/preview', async(req, res) => {
       catch (errors) {
         console.error(errors);
         res.status(400).json({
-          title: 'Text Mode',
           errors: errors,
           message: null
         });
@@ -355,7 +350,6 @@ router.post('/preview', async(req, res) => {
           req.app.locals.mode = modes.IMAGE;
           const message = await transformImage(req.body.message);
           res.status(200).json({
-            title: 'Image Mode',
             errors: null,
             message: message
           })
@@ -364,7 +358,6 @@ router.post('/preview', async(req, res) => {
       catch (errors) {
         console.error(errors);
         res.status(400).json({
-          title: 'Image Mode',
           errors: errors,
           message: null
           })
@@ -386,7 +379,6 @@ router.post('/preview', async(req, res) => {
           garageIds[req.body.message],
         );
         res.status(200).json({
-          title: 'Data Mode',
           errors: null,
           message: message
         })
@@ -394,7 +386,6 @@ router.post('/preview', async(req, res) => {
       catch(errors) {
         console.error(errors);
         res.status(400).json({
-          title: 'Data Mode',
           errors: errors,
           messages: null
         })
