@@ -23,20 +23,21 @@ block content
       var line2 = document.getElementById('line2').value
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function() {
-        console.log("readyState == " + this.readyState);
-        if (this.readyState == 4) {
-          if (this.status == 200) {
+        if (xhttp.readyState == 4) {
+          if (xhttp.status == 200) {
             var response = JSON.parse(this.responseText)
-            console.log(response.messages)
-            previewDisplay(response.messages)
+            console.log(response.errors)
+            previewDisplay(response.message)
           } else {
-            alert('Invalid input');
+            var response = JSON.parse(this.responseText)
+            alert(response.errors);
           }
         }
-      }
-      xhttp.open('POST', '/message/preview', true)
-      xhttp.setRequestHeader('Content-type', 'application/json')
-      xhttp.send(JSON.stringify({line1: line1, line2: line2, mode: 1}))  
+      };
+      xhttp.open('POST', '/message/preview', true);
+      xhttp.setRequestHeader('Content-Type', 'application/json');
+      xhttp.send(JSON.stringify({line1: line1, line2: line2, mode: 1}));
+      console.log("readyState == " + this.readyState);
     }
 
     var previewDisplay = function(message) {
