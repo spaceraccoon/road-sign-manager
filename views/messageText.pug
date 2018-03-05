@@ -49,7 +49,6 @@ block content
       var bitArray = message.split('').map(Number)
       var display = document.getElementById('display')
       bitArray.forEach(function(element) {
-        console.log(element)
         var cell = document.createElement('div')
         cell.className = element == 1 ? 'on' : 'off'
         display.appendChild(cell)
