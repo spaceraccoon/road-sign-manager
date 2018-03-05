@@ -277,7 +277,7 @@ router.post('/preview', async(req, res) => {
         if (errors) {
           throw errors;
         } else {
-          res.status(200).json('messageManual', {
+          res.status(200).json({
             title: 'Manual Mode',
             errors: null,
             message: req.body.message,
@@ -286,8 +286,8 @@ router.post('/preview', async(req, res) => {
       }
       catch (errors) {
         console.error(errors);
-        res.status(400).json('messageImage', {
-          title: 'Image Mode',
+        res.status(400).json({
+          title: 'Manual Mode',
           errors: errors,
           message: null
           })
@@ -386,7 +386,7 @@ router.post('/preview', async(req, res) => {
           garageIds[req.body.message],
         );
         res.status(200).json({
-          title: 'Image Mode',
+          title: 'Data Mode',
           errors: null,
           message: message
         })
@@ -394,7 +394,7 @@ router.post('/preview', async(req, res) => {
       catch(errors) {
         console.error(errors);
         res.status(400).json({
-          title: 'Image Mode',
+          title: 'Data Mode',
           errors: errors,
           messages: null
         })

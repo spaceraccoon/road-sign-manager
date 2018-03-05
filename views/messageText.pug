@@ -12,11 +12,10 @@ block content
       label(for='line2') Line 2
       input.form-control.col-sm-3(id='line2', name='line2', type='text', placeholder='Line 2 (optional)')
     button.btn.btn-primary(type='submit') Submit
-    button.btn.btn-primary(type='button', id='preview-button', onclick='preview(event)') Preview
+    | #{' '}
+    button.btn.btn-default(type='button', id='preview-btn', onclick='preview(event)') Preview
   h2 Display
   div#display
-  h2 Message
-  p#message
 
   script.
     var preview = function(event) {
@@ -31,7 +30,7 @@ block content
             previewDisplay(response.message)
           } else {
             var response = JSON.parse(this.responseText)
-            alert(response.errors);
+            alert("Unable to preview");
           }
         }
       };
@@ -41,7 +40,6 @@ block content
     }
   script.
     var previewDisplay = function(message) {
-      document.getElementById('message').innerText = message
       var display = document.getElementById('display')
       while (display.hasChildNodes()) {
         display.removeChild(display.lastChild)
