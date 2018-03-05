@@ -276,19 +276,20 @@ router.post('/preview', async(req, res) => {
         const errors = req.validationErrors();
         if (errors) {
           throw errors;
-        }
-        else {
-          res.status(200).send('messageManual', {
+        } else {
+          res.status(200).json('messageManual', {
             title: 'Manual Mode',
-            messages: req.body.message
-          })
+            errors: null,
+            message: req.body.message,
+          });
         }
       }
       catch (errors) {
         console.error(errors);
-        res.status(400).send('messageImage', {
+        res.status(400).json('messageImage', {
           title: 'Image Mode',
-          messages: errors
+          errors,
+          message: null
           })
       }
       break;
@@ -315,31 +316,30 @@ router.post('/preview', async(req, res) => {
         errors = req.validationErrors();
         if (errors) {
           throw errors;
-        } 
+        }
         else {
           clearInterval(req.app.locals.dataInterval);
           req.app.locals.mode = modes.TEXT;
           const message = await transformText([req.body.line1, req.body.line2]);
-          await axios.post(process.env.ROAD_SIGN_URL, {
-            message,
-          });
           console.log("sending response");
           res.status(200).json({
             title: 'Text Mode',
-            messages: message
-          })
+            errors: null,
+            message: message
+          });
         }
       }
       catch (errors) {
         console.error(errors);
         res.status(400).json({
-          title: 'Image Mode',
-          messages: errors
-          })
+          title: 'Text Mode',
+          errors,
+          message: null
+        });
       }
       break;
     case modes.IMAGE:
-      try { 
+      try {
         req
           .checkBody(
             'message',
@@ -349,17 +349,15 @@ router.post('/preview', async(req, res) => {
         errors = req.validationErrors();
         if (errors) {
           throw errors;
-        } 
+        }
         else {
           clearInterval(req.app.locals.dataInterval);
           req.app.locals.mode = modes.IMAGE;
           const message = await transformImage(req.body.message);
-          await axios.post(process.env.ROAD_SIGN_URL, {
-            message,
-          });
           res.status(200).json({
             title: 'Image Mode',
-            messages: message
+            errors: null,
+            message: message
           })
         }
       }
@@ -367,7 +365,8 @@ router.post('/preview', async(req, res) => {
         console.error(errors);
         res.status(400).json({
           title: 'Image Mode',
-          messages: errors
+          errors,
+          message: null
           })
       }
       break;
@@ -381,9 +380,6 @@ router.post('/preview', async(req, res) => {
           data.name.toUpperCase(),
           `${data.free} Lots`.toUpperCase(),
         ]);
-        await axios.post(process.env.ROAD_SIGN_URL, {
-          message,
-        });
         req.app.locals.dataInterval = setInterval(
           intervalHandler,
           60000,
@@ -391,18 +387,20 @@ router.post('/preview', async(req, res) => {
         );
         res.status(200).json({
           title: 'Image Mode',
-          messages: message
+          errors: null,
+          message: message
         })
       }
       catch(errors) {
         console.error(errors);
         res.status(400).json({
           title: 'Image Mode',
-          messages: errors
+          errors,
+          messages: null
         })
-      }           
+      }
       break;
   }
 });
-  
+
 module.exports = router;
