@@ -15,6 +15,8 @@ block content
     button.btn.btn-primary(type='button', id='preview-button', onclick='preview(event)') Preview
   h2 Display
   div#display
+  h2 Message
+  p#message
 
   script.
     var preview = function(event) {
@@ -26,7 +28,6 @@ block content
         if (xhttp.readyState == 4) {
           if (xhttp.status == 200) {
             var response = JSON.parse(this.responseText)
-            console.log(response.errors)
             previewDisplay(response.message)
           } else {
             var response = JSON.parse(this.responseText)
@@ -37,10 +38,10 @@ block content
       xhttp.open('POST', '/message/preview', true);
       xhttp.setRequestHeader('Content-Type', 'application/json');
       xhttp.send(JSON.stringify({line1: line1, line2: line2, mode: 1}));
-      console.log("readyState == " + this.readyState);
     }
-
+  script.
     var previewDisplay = function(message) {
+      document.getElementById('message').innerText = message
       var display = document.getElementById('display')
       while (display.hasChildNodes()) {
         display.removeChild(display.lastChild)
@@ -48,6 +49,7 @@ block content
       var bitArray = message.split('').map(Number)
       var display = document.getElementById('display')
       bitArray.forEach(function(element) {
+        console.log(element)
         var cell = document.createElement('div')
         cell.className = element == 1 ? 'on' : 'off'
         display.appendChild(cell)
