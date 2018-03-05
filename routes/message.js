@@ -288,7 +288,7 @@ router.post('/preview', async(req, res) => {
         console.error(errors);
         res.status(400).json('messageImage', {
           title: 'Image Mode',
-          errors,
+          errors: errors,
           message: null
           })
       }
@@ -333,7 +333,7 @@ router.post('/preview', async(req, res) => {
         console.error(errors);
         res.status(400).json({
           title: 'Text Mode',
-          errors,
+          errors: errors,
           message: null
         });
       }
@@ -365,7 +365,7 @@ router.post('/preview', async(req, res) => {
         console.error(errors);
         res.status(400).json({
           title: 'Image Mode',
-          errors,
+          errors: errors,
           message: null
           })
       }
@@ -395,7 +395,7 @@ router.post('/preview', async(req, res) => {
         console.error(errors);
         res.status(400).json({
           title: 'Image Mode',
-          errors,
+          errors: errors,
           messages: null
         })
       }
