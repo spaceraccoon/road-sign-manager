@@ -4,6 +4,7 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const validator = require('express-validator');
+const MockAdapter = require('axios-mock-adapter');
 
 require('dotenv').config();
 
