@@ -5,3 +5,34 @@ body {
 .navbar-dark .current-mode {
   color: #fff;
 }
+
+#message {
+  overflow-wrap: break-word;
+}
+
+#display {
+  width: 960px;
+  height: 270px;
+}
+
+.on {
+  float: left;
+  width: 10px;
+  height: 10px;
+  background-color: #FF6600;
+  font-size:50px;
+  text-align:center;
+  display: table-cell;
+  vertical-align:middle;
+}
+
+.off {
+  float: left;
+  width: 10px;
+  height: 10px;
+  background-color: #333;
+  font-size:50px;
+  text-align:center;
+  display: table-cell;
+  vertical-align:middle;
+}
