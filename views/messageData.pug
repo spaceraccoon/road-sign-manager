@@ -14,43 +14,6 @@ block content
         option(value='3') Temple Medical Garage
         option(value='4') Temple Street Garage
         option(value='5') Union Stage Garage
-    button.btn.btn-primary(type='submit') Submit
-    | #{' '}
+    button.btn.btn-primary.mr-1(type='submit') Submit
     button.btn.btn-default(type='button', id='preview-btn', onclick='preview(event)') Preview
-  h2 Display
-  div#display
-
-  script.
-    var preview = function(event) {
-      event.preventDefault()
-      var message = document.getElementById('message').value
-      var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function() {
-        if (xhttp.readyState == 4) {
-          if (xhttp.status == 200) {
-            var response = JSON.parse(this.responseText)
-            previewDisplay(response.message)
-          } else {
-            var response = JSON.parse(this.responseText)
-            alert("Unable to preview");
-          }
-        }
-      };
-      xhttp.open('POST', '/message/preview', true);
-      xhttp.setRequestHeader('Content-Type', 'application/json');
-      xhttp.send(JSON.stringify({message: message, mode: 3}));
-    }
-  script.
-    var previewDisplay = function(message) {
-      var display = document.getElementById('display')
-      while (display.hasChildNodes()) {
-        display.removeChild(display.lastChild)
-      }
-      var bitArray = message.split('').map(Number)
-      var display = document.getElementById('display')
-      bitArray.forEach(function(element) {
-        var cell = document.createElement('div')
-        cell.className = element == 1 ? 'on' : 'off'
-        display.appendChild(cell)
-      })
-    }
+  include preview
