@@ -11,7 +11,7 @@ const modes = {
   MANUAL: 0,
   TEXT: 1,
   IMAGE: 2,
-  DATA: 3,
+  DATASINGLE: 3,
 };
 
 const garageIds = {
@@ -63,10 +63,10 @@ router.get('/image', (req, res) => {
 });
 
 /* GET parking data mode page. */
-router.get('/data', (req, res) => {
-  res.render('messageData', {
+router.get('/data-single', (req, res) => {
+  res.render('messageDataSingle', {
     title: 'Data Mode',
-    mode: modes.DATA,
+    mode: modes.DATASINGLE,
   });
 });
 
@@ -227,10 +227,10 @@ router.post('/image', async (req, res) => {
 });
 
 /* POST data message and forwards converted binary string to road sign. */
-router.post('/data', async (req, res) => {
+router.post('/data-single', async (req, res) => {
   try {
     clearInterval(req.app.locals.dataInterval);
-    req.app.locals.currentMode = modes.DATA;
+    req.app.locals.currentMode = modes.DATASINGLE;
     req.app.locals.garage = req.body.message;
     const data = await fetchData(garageIds[req.body.message]);
     const message = await transformText([
@@ -245,9 +245,9 @@ router.post('/data', async (req, res) => {
       60000,
       garageIds[req.body.message],
     );
-    res.render('messageData', {
+    res.render('messageDataSingle', {
       title: 'Data Mode',
-      mode: modes.DATA,
+      mode: modes.DATASINGLE,
       flash: {
         type: 'alert-success',
         messages: [
@@ -259,9 +259,9 @@ router.post('/data', async (req, res) => {
     });
   } catch (e) {
     console.error(e);
-    res.render('messageData', {
+    res.render('messageDataSingle', {
       title: 'Data Mode',
-      mode: modes.DATA,
+      mode: modes.DATASINGLE,
       flash: {
         type: 'alert-danger',
         messages: [
@@ -347,7 +347,7 @@ router.post('/preview', async (req, res) => {
           });
         }
         break;
-      case modes.DATA: {
+      case modes.DATASINGLE: {
         const data = await fetchData(garageIds[req.body.message]);
         const message = await transformText([
           data.name.toUpperCase(),
