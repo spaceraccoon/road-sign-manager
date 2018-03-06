@@ -3,6 +3,11 @@ const axios = require('axios');
 const MockAdapter = require('axios-mock-adapter');
 const app = require('../app');
 
+beforeAll(() => {
+  const mock = new MockAdapter(axios);
+  mock.onPost(process.env.ROAD_SIGN_URL).reply(200, {});
+});
+
 describe('Test message paths', () => {
   describe('Test manual message paths', () => {
     test('It should raise an error for an incorrect POST request', () =>
@@ -11,8 +16,6 @@ describe('Test message paths', () => {
         .type('form')
         .send({ message: '01' })
         .then(response => {
-          const mock = new MockAdapter(axios);
-          mock.onPost(process.env.ROAD_SIGN_URL).reply(200, {});
           expect(response.statusCode).toBe(200);
           expect(response.text).toContain(
             'Please enter a valid binary string. See above for details.',
@@ -31,7 +34,7 @@ describe('Test message paths', () => {
           expect(response.text).toContain('Success!');
         }));
   });
-describe('Test text message paths', () => {
+  describe('Test text message paths', () => {
     test('It should raise an error for an incorrect POST request', () =>
       request(app)
         .post('/message/text')
@@ -63,15 +66,16 @@ describe('Test text message paths', () => {
         .post('/message/text')
         .type('form')
         .send({
-          line1:
-            'Hello', line2: 'World'})
+          line1: 'Hello',
+          line2: 'World',
+        })
         .then(response => {
           expect(response.statusCode).toBe(200);
           expect(response.text).toContain('Success!');
         }));
   });
 
-	describe('Test image message paths', () => {
+  describe('Test image message paths', () => {
     test('It should raise an error for an incorrect POST request', () =>
       request(app)
         .post('/message/image')
@@ -91,7 +95,8 @@ describe('Test text message paths', () => {
         .type('form')
         .send({
           message:
-            'https://en.facebookbrand.com/wp-content/uploads/2016/05/FB-fLogo-Blue-broadcast-2.png'})
+            'https://en.facebookbrand.com/wp-content/uploads/2016/05/FB-fLogo-Blue-broadcast-2.png',
+        })
         .then(response => {
           expect(response.statusCode).toBe(200);
           expect(response.text).toContain('Success!');

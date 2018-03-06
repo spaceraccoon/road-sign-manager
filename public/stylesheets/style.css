@@ -1,18 +1,19 @@
 body {
-  padding-top: 5rem;
+  padding: 5rem 0;
 }
 
 .navbar-dark .current-mode {
   color: #fff;
 }
 
-#message {
-  overflow-wrap: break-word;
+#preview {
+  margin-top: 20px;
 }
 
-#display {
+#preview-display {
   width: 960px;
   height: 270px;
+  background-color: #333;
 }
 
 .on {
