@@ -4,7 +4,7 @@ block content
   h1 #{title}
   p Welcome to #{title}. Please enter your text input. For readability, capital letters are recommended. Any line longer than 12 characters will be cut off.
   include flashes
-  form#message-form(action='/message/text', method='post')
+  form(action='/message/text', method='post')
     .form-group
       label(for='line1') Line 1
       input.form-control.col-sm-3(id='line1', name='line1', type='text', columns='5' placeholder='Line 1')
