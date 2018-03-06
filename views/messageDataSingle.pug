@@ -4,7 +4,7 @@ block content
   h1 #{title}
   p Welcome to #{title}. Please select a garage. Occupancy data will be fetched from the Smarking service every minute and sent to the road sign.
   include flashes
-  form(action='/message/data', method='post')
+  form(action='/message/data-single', method='post')
     .form-group
       label(for='message') Garage
       select.form-control.col-sm-4(id='message', name='message')
