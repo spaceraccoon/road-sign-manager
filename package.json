@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon -e js,pug,css ./bin/www",
-    "test": "jest",
+    "test": "jest --silent --verbose",
     "precommit": "eslint . --fix"
   },
   "dependencies": {
@@ -16,13 +16,16 @@
     "debug": "~2.6.9",
     "dotenv": "^4.0.0",
     "express": "~4.15.5",
+    "express-robots": "^0.1.6",
     "express-validator": "^4.3.0",
     "jimp": "^0.2.28",
     "jsdom": "^11.3.0",
     "morgan": "~1.9.0",
-    "pug": "^2.0.0-rc.4"
+    "pug": "^2.0.0-rc.4",
+    "serve-favicon": "^2.4.5"
   },
   "devDependencies": {
+    "axios-mock-adapter": "^1.14.1",
     "eslint": "^4.17.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-config-prettier": "^2.9.0",

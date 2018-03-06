@@ -1,0 +1,59 @@
+div#preview
+  h2 Preview
+  div#preview-display
+
+script.
+  var preview = function(event) {
+    event.preventDefault()
+    var message;
+    if (#{mode} == 1) {
+      message = {
+        line1: document.getElementById('line1').value,
+        line2: document.getElementById('line2').value
+      };
+    } else {
+       message = document.getElementById('message').value;
+    }
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (xhttp.readyState == 4) {
+        if (xhttp.status == 200) {
+          var response = JSON.parse(this.responseText);
+          loadPreview(response.message);
+        } else {
+          var response = JSON.parse(this.responseText);
+          if (response.errors.length > 0) {
+            var flash = document.getElementById('flash');
+            while (flash.hasChildNodes()) {
+              flash.removeChild(flash.lastChild);
+            }
+            var alert = document.createElement('div');
+            alert.classList.add('alert', 'alert-danger');
+            response.errors.forEach(function(error) {
+              var message = document.createElement('div');
+              message.textContent = error.msg;
+              alert.appendChild(message);
+            });
+            flash.appendChild(alert);
+          }
+          alert("Unable to preview");
+        }
+      }
+    };
+    xhttp.open('POST', '/message/preview', true);
+    xhttp.setRequestHeader('Content-Type', 'application/json');
+    xhttp.send(JSON.stringify({message: message, mode: #{mode}}));
+  }
+script.
+  var loadPreview = function(message) {
+    var previewDisplay = document.getElementById('preview-display');
+    while (previewDisplay.hasChildNodes()) {
+      previewDisplay.removeChild(previewDisplay.lastChild);
+    }
+    var bitArray = message.split('').map(Number);
+    bitArray.forEach(function(element) {
+      var cell = document.createElement('div');
+      cell.className = element == 1 ? 'on' : 'off';
+      previewDisplay.appendChild(cell);
+    });
+  }

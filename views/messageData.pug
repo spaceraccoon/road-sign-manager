@@ -14,5 +14,7 @@ block content
         option(value='3') Temple Medical Garage
         option(value='4') Temple Street Garage
         option(value='5') Union Stage Garage
-    button.btn.btn-primary(type='button' data-toggle='modal' data-target='#confirmationModal') Submit
-    include confirmationModal.pug
+    button.btn.btn-primary.mr-1(type='button' data-toggle='modal' data-target='#confirmationModal') Submit
+    include confirmationModal
+    button.btn.btn-default(type='button', id='preview-btn', onclick='preview(event)') Preview
+  include preview

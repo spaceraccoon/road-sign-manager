@@ -1,7 +1,6 @@
-if flash
-  div.alert(class=flash.type)
-    ul
-    - for (var i = 0; i < flash.messages.length; i++) {
-        p #{flash.messages[i].msg}
-    - }
-    ul
+div#flash
+  if flash
+    div.alert(class=flash.type)
+      - for (var i = 0; i < flash.messages.length; i++) {
+          div #{flash.messages[i].msg}
+      - }
