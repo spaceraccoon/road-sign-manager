@@ -1,4 +1,6 @@
 const express = require('express');
+const favicon = require('serve-favicon');
+const robots = require('express-robots');
 const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
@@ -17,8 +19,14 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 // app locals
-app.locals.mode = 0;
+app.locals.currentMode = 0;
 app.locals.dataInterval = null;
+
+// favicon
+app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
+
+// robots - no index
+app.use(robots({ UserAgent: '*', Disallow: '/' }));
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -50,7 +58,7 @@ app.use((err, req, res) => {
 
 // pass mode to all views
 app.use((req, res, next) => {
-  res.locals.mode = req.app.locals.mode;
+  res.locals.currentMode = req.app.locals.currentMode;
   next();
 });
 
