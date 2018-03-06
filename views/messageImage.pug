@@ -4,11 +4,11 @@ block content
   h1 #{title}
   p Welcome to #{title}. Please enter your image URL for the road sign. Any pixel other than white or transparent will turn on its corresponding pixel on the road sign.
   include flashes
-  form(action='/message/image', method='post')
+  form#message-form(action='/message/image', method='post')
     .form-group
       label(for='message') Image URL
       input.form-control.col-sm-4(id='message', name='message', type='text', placeholder='Enter your image URL')
-    button.btn.btn-primary.mr-1(type='button' data-toggle='modal' data-target='#confirmationModal') Submit
+    button.btn.btn-primary.mr-1(type='button' data-toggle='modal' data-target='#confirmation') Submit
     include confirmationModal
     button.btn.btn-default(type='button', id='preview-btn', onclick='preview(event)') Preview
   include preview

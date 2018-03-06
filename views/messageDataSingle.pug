@@ -4,7 +4,7 @@ block content
   h1 #{title}
   p Welcome to #{title}. Please select a garage. Occupancy data will be fetched from the Smarking service every minute and sent to the road sign.
   include flashes
-  form(action='/message/data-single', method='post')
+  form#message-form(action='/message/data-single', method='post')
     .form-group
       label(for='message') Garage
       select.form-control.col-sm-4(id='message', name='message')
@@ -14,7 +14,7 @@ block content
         option(value='3') Temple Medical Garage
         option(value='4') Temple Street Garage
         option(value='5') Union Stage Garage
-    button.btn.btn-primary.mr-1(type='button' data-toggle='modal' data-target='#confirmationModal') Submit
+    button.btn.btn-primary.mr-1(type='button' data-toggle='modal' data-target='#confirmation') Submit
     include confirmationModal
     button.btn.btn-default(type='button', id='preview-btn', onclick='preview(event)') Preview
   include preview
