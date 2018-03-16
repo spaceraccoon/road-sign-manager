@@ -7,7 +7,9 @@
 const app = require('../app');
 const debug = require('debug')('express-sequelize');
 const http = require('http');
+const { Op } = require('sequelize');
 const models = require('../models');
+const modes = require('../data/modes');
 
 /**
  * Normalize a port into a number, string, or false.
@@ -80,7 +82,7 @@ function onListening() {
 
 models.sequelize.sync().then(() => {
   /**
-   * Reset values of mode and message for Sign table.
+   * Reset values of mode and message for data modes since restarting the server removes the automatic update.
    */
   models.Sign.update(
     {
@@ -88,7 +90,11 @@ models.sequelize.sync().then(() => {
       message: null,
     },
     {
-      where: {},
+      where: {
+        mode: {
+          [Op.or]: [modes.DATASINGLE, modes.DATAMULTI],
+        },
+      },
     },
   );
 

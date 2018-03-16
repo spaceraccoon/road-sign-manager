@@ -1,0 +1,33 @@
+{
+  "name": "Road Sign Manager",
+  "description": "A cloud platform that can convert and send data to electronic road signs in the city.",
+  "repository": "https://github.com/spaceraccoon/road-sign-manager",
+  "keywords": ["node", "express", "pug", "govtech"],
+  "addons": [
+    "heroku-postgresql"
+  ],
+  "env": {
+    "ADMIN_USERNAME": {
+      "description": "Authentication username.",
+      "value": "username"
+    },
+    "ADMIN_PASSWORD": {
+      "description": "Authentication password.",
+      "generator": "secret"
+    },
+    "DATABASE_URL": {
+      "description": "URL endpoint for database (you can use the heroku-postgres addon)."
+    },
+    "DISPLAY_WIDTH": {
+      "description": "Width of the road sign display in pixels (or number of bulbs).",
+      "value": "96"
+    },
+    "DISPLAY_HEIGHT": {
+      "description": "Height of the road sign display in pixels (or number of bulbs).",
+      "value": "27"
+    },
+    "SMARKING_KEY": {
+      "description": "API key for the Smarking service."
+    }
+  }
+}  
