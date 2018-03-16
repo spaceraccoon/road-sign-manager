@@ -27,6 +27,7 @@ describe('Test message paths', () => {
     test('It should raise an error for an invalid binary string', () =>
       request(app)
         .post('/message/manual')
+        .auth(process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD)
         .type('form')
         .send({ message: '01', signOptions: ['1', '2'] })
         .then(response => {
@@ -38,6 +39,7 @@ describe('Test message paths', () => {
     test('It should raise an error for a missing road sign', () =>
       request(app)
         .post('/message/manual')
+        .auth(process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD)
         .type('form')
         .send({
           message:
@@ -52,6 +54,7 @@ describe('Test message paths', () => {
     test('It should successfully respond to a correct POST request', () =>
       request(app)
         .post('/message/manual')
+        .auth(process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD)
         .type('form')
         .send({
           message:
@@ -67,6 +70,7 @@ describe('Test message paths', () => {
     test('It should raise an error for an error for missing first line', () =>
       request(app)
         .post('/message/text')
+        .auth(process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD)
         .type('form')
         .send({ line1: '', signOptions: ['1', '2'] })
         .then(response => {
@@ -78,6 +82,7 @@ describe('Test message paths', () => {
     test('It should raise an error for too long line', () =>
       request(app)
         .post('/message/text')
+        .auth(process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD)
         .type('form')
         .send({
           line1: 'This line is too long for line one',
@@ -92,6 +97,7 @@ describe('Test message paths', () => {
     test('It should raise an error for a missing road sign', () =>
       request(app)
         .post('/message/text')
+        .auth(process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD)
         .type('form')
         .send({
           line1: 'Hello',
@@ -106,6 +112,7 @@ describe('Test message paths', () => {
     test('It should successfully respond to a correct POST request', () =>
       request(app)
         .post('/message/text')
+        .auth(process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD)
         .type('form')
         .send({
           line1: 'Hello',
@@ -122,6 +129,7 @@ describe('Test message paths', () => {
     test('It should raise an error for an invalid image URL', () =>
       request(app)
         .post('/message/image')
+        .auth(process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD)
         .type('form')
         .send({ message: 'notanimagefile', signOptions: ['1', '2'] })
         .then(response => {
@@ -133,6 +141,7 @@ describe('Test message paths', () => {
     test('It should raise an error for a missing road sign', () =>
       request(app)
         .post('/message/image')
+        .auth(process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD)
         .type('form')
         .send({ message: 'notanimagefile' })
         .then(response => {
@@ -144,6 +153,7 @@ describe('Test message paths', () => {
     test('It should successfully respond to a correct POST request', () =>
       request(app)
         .post('/message/image')
+        .auth(process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD)
         .type('form')
         .send({
           message:
