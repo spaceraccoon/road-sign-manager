@@ -9,7 +9,6 @@ module.exports = {
       },
       garageId: {
         type: Sequelize.BIGINT,
-        unique: true,
       },
       name: {
         type: Sequelize.STRING,

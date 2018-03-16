@@ -45,21 +45,6 @@ router.post(
             },
           ),
         );
-      // req.checkBody('garageId', `Garage already exists.`).custom(
-      //   async garageId =>
-      //     new Promise(async (resolve, reject) => {
-      //       const garage = await Garage.findOne({
-      //         where: {
-      //           garageId,
-      //         },
-      //       });
-      //       if (garage) {
-      //         reject(new Error('Garage already exists'));
-      //       } else {
-      //         resolve();
-      //       }
-      //     }),
-      // );
       try {
         await req.asyncValidationErrors();
       } catch (e) {
@@ -170,21 +155,6 @@ router.post(
           /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/,
           'i',
         );
-      req.checkBody('url', `Sign URL already exists.`).custom(
-        async url =>
-          new Promise(async (resolve, reject) => {
-            const sign = await Sign.findOne({
-              where: {
-                url,
-              },
-            });
-            if (sign) {
-              reject(new Error('Sign URL already exists'));
-            } else {
-              resolve();
-            }
-          }),
-      );
       try {
         await req.asyncValidationErrors();
       } catch (e) {
