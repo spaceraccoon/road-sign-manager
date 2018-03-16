@@ -1,0 +1,39 @@
+extends layout
+
+block content
+  h1 #{title}
+  include flashes
+  h3 Add New Garage or Parking Space
+  p Please enter a garage name and a valid Smarking garage ID. Please see the  
+    a(href='https://app.swaggerhub.com/apis/Smarking/smarking-data_api/1.0.0') Smarking API documentation  
+    | for more information.
+  form.form-inline.mb-2(action='/settings/create-garage', method='post')
+    label.sr-only(for='garageName') Name
+    input#garageName.form-control.mb-2.mr-sm-2(name='name' type='text' placeholder='Name')
+    label.sr-only(for='garageId') Smarking Garage ID
+    input#garageId.form-control.mb-2.mr-sm-2(name='garageId' type='text' placeholder='Smarking Garage ID')
+    button.btn.btn-primary.mb-2(type="submit") Add
+  h3 Delete Existing Garages or Parking Spaces
+  form.form-inline.mb-2(action='/settings/delete-garage', method='post')
+    label.sr-only(for='garageId2') Garages
+    select#garageId2.form-control.mb-2.mr-sm-2(name='id')
+      - for (var i = 0; i < garages.length; i++) {
+          option(value=garages[i].id) #{garages[i].name} - #{garages[i].garageId}
+      - }
+    button.btn.btn-danger.mb-2(type="submit") Delete
+  h3 Create New Sign
+  p Please enter a sign name and a valid URL endpoint.
+  form.form-inline.mb-2(action='/settings/create-sign', method='post')
+    label.sr-only(for='signName') Name
+    input#signName.form-control.mb-2.mr-sm-2(name='name' type='text' placeholder='Name')
+    label.sr-only(for='signURL') Sign URL
+    input#signURL.form-control.mb-2.mr-sm-2(name='url' type='text' placeholder='Sign URL endpoint')
+    button.btn.btn-primary.mb-2(type="submit") Create
+  h3 Delete Existing Signs
+  form.form-inline.mb-2(action='/settings/delete-sign', method='post')
+    label.sr-only(for='signId') Signs
+    select#signId.form-control.mb-2.mr-sm-2(name='id')
+      - for (var i = 0; i < signs.length; i++) {
+          option(value=signs[i].id) #{signs[i].name} - #{signs[i].url}
+      - }
+    button.btn.btn-danger.mb-2(type="submit") Delete

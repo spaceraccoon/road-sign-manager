@@ -1,0 +1,21 @@
+{
+  "development": {
+    "username": "username",
+    "password": "password",
+    "database": "database",
+    "dialect": "sqlite",
+    "storage": "database.sqlite",
+    "operatorsAliases": false
+  },
+  "test": {
+    "username": "username",
+    "password": "password",
+    "database": "database",
+    "dialect": "sqlite",
+    "operatorsAliases": false
+  },
+  "production": {
+    "use_env_variable": "DATABASE_URL",
+    "operatorsAliases": false
+  }
+}

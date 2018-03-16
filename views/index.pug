@@ -4,3 +4,53 @@ block content
   h1 #{title}
   p Welcome to Road Sign Manager, a cloud platform that converts and sends data to electronic road signs in New Haven city.
   p To begin, select a mode under the 'Message' tab and enter your message.
+
+  h2 Sign Status
+  table.table
+    thead
+      th(scope='col') ID
+      th(scope='col') Name
+      th(scope='col') URL
+      th(scope='col') Mode
+      th(scope='col') Current Display
+    tbody
+    - for (var i = 0; i < signs.length; i++) {
+        tr
+          th(scope='row') #{signs[i].id}
+          td #{signs[i].name}
+          td #{signs[i].url}
+          case signs[i].mode
+            when 0
+              td Manual
+            when 1
+              td Text
+            when 2
+              td Image
+            when 3
+              td Data (Single)
+            when 4
+              td Data (Multi)
+            default
+              td Off
+          td
+            button.btn.btn-default(type='button', id='preview-btn', onclick='loadPreview("' + signs[i].message + '")') Generate
+    - }
+
+  div#preview
+    h2 Display
+    div#preview-display
+
+  script.
+    var loadPreview = function(message) {
+      console.log(message)
+      var previewDisplay = document.getElementById('preview-display');
+      while (previewDisplay.hasChildNodes()) {
+        previewDisplay.removeChild(previewDisplay.lastChild);
+      }
+      var bitArray = message.split('').map(Number);
+      bitArray.forEach(function(element) {
+        var cell = document.createElement('div');
+        cell.className = element == 1 ? 'on' : 'off';
+        previewDisplay.appendChild(cell);
+      });
+    }
