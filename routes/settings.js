@@ -45,21 +45,21 @@ router.post(
             },
           ),
         );
-      req.checkBody('garageId', `Garage already exists.`).custom(
-        async garageId =>
-          new Promise(async (resolve, reject) => {
-            const garage = await Garage.findOne({
-              where: {
-                garageId,
-              },
-            });
-            if (garage) {
-              reject(new Error('Garage already exists'));
-            } else {
-              resolve();
-            }
-          }),
-      );
+      // req.checkBody('garageId', `Garage already exists.`).custom(
+      //   async garageId =>
+      //     new Promise(async (resolve, reject) => {
+      //       const garage = await Garage.findOne({
+      //         where: {
+      //           garageId,
+      //         },
+      //       });
+      //       if (garage) {
+      //         reject(new Error('Garage already exists'));
+      //       } else {
+      //         resolve();
+      //       }
+      //     }),
+      // );
       try {
         await req.asyncValidationErrors();
       } catch (e) {
