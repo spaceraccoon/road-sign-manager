@@ -15,9 +15,6 @@
       "description": "Authentication password.",
       "generator": "secret"
     },
-    "DATABASE_URL": {
-      "description": "URL endpoint for database (you can use the heroku-postgres addon)."
-    },
     "DISPLAY_WIDTH": {
       "description": "Width of the road sign display in pixels (or number of bulbs).",
       "value": "96"
