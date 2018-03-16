@@ -17,6 +17,7 @@
     "debug": "~2.6.9",
     "dotenv": "^4.0.0",
     "express": "~4.15.5",
+    "express-basic-auth": "^1.1.4",
     "express-robots": "^0.1.6",
     "express-validator": "^4.3.0",
     "jimp": "^0.2.28",
