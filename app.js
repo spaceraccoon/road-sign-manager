@@ -6,6 +6,8 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const validator = require('express-validator');
+const basicAuth = require('express-basic-auth');
+const helmet = require('helmet');
 
 require('dotenv').config();
 
@@ -23,6 +25,17 @@ app.set('view engine', 'pug');
 // app locals
 app.locals.currentMode = 0;
 app.locals.dataInterval = null;
+
+// HTTP header security
+app.use(helmet());
+
+// authentication
+app.use(
+  basicAuth({
+    users: { [process.env.ADMIN_USERNAME]: process.env.ADMIN_PASSWORD },
+    challenge: true,
+  }),
+);
 
 // favicon
 app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
