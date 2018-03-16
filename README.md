@@ -12,7 +12,9 @@ Road Sign Manager is a Code4Good at Yale, MakeHaven and New Haven collaborative 
 6. `yarn test` or `npm test` to run tests.
 
 ## Deploy
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+1. [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+2. After installing, go to Settings to add parking spaces and road signs.
+3. If you wish to change the password or other config variables, go to the settings page of the heroku instance and edit cofig variables.
 
 ## Contributing
 At the moment, road-sign-manager is developed by a student team at Code4Good at Yale University. However, feel free to create issues and open pull requests.
