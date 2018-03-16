@@ -8,12 +8,10 @@
   ],
   "env": {
     "ADMIN_USERNAME": {
-      "description": "Authentication username.",
-      "value": "username"
+      "description": "Authentication username."
     },
     "ADMIN_PASSWORD": {
-      "description": "Authentication password.",
-      "generator": "secret"
+      "description": "Authentication password."
     },
     "DISPLAY_WIDTH": {
       "description": "Width of the road sign display in pixels (or number of bulbs).",
