@@ -22,7 +22,7 @@ html
       .collapse.navbar-collapse#navbarNav
         ul.navbar-nav.mr-auto
           li.nav-item
-            a.nav-link(href='/') Home
+            a.nav-link(href='/') Dashboard
           li.nav-item
             a.nav-link(href='/about') About
           li.nav-item.dropdown
@@ -32,17 +32,9 @@ html
               a.dropdown-item(href='/message/text') Text
               a.dropdown-item(href='/message/image') Image
               a.dropdown-item(href='/message/data-single') Parking Data (Single)
-        case currentMode
-          when 0
-            span.navbar-text.current-mode Current Mode: MANUAL
-          when 1
-            span.navbar-text.current-mode Current Mode: TEXT
-          when 2
-            span.navbar-text.current-mode Current Mode: IMAGE
-          when 3
-            span.navbar-text.current-mode Current Mode: DATA
-          default
-            span.navbar-text.current-mode Current Mode: MANUAL
+              a.dropdown-item(href='/message/data-multi') Parking Data (Multi)
+          li.nav-item
+            a.nav-link(href='/settings') Settings
 
     div.container
       block content

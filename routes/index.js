@@ -1,11 +1,21 @@
 const express = require('express');
 
+const { Garage, Sign } = require('../models');
+
 const router = express.Router();
 
 /* GET home page. */
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   res.render('index', {
-    title: 'Home',
+    title: 'Dashboard',
+    garages: await Garage.findAll({
+      raw: true,
+      order: [['name', 'ASC']],
+    }),
+    signs: await Sign.findAll({
+      raw: true,
+      order: [['name', 'ASC']],
+    }),
   });
 });
 

@@ -1,0 +1,22 @@
+extends ../layout
+
+block content
+  h1 #{title}
+  p Welcome to #{title}. Please select the garages whose data you want to display and the interval time between each garage.
+  include ../flashes
+  form(action='/message/data-multi', method='post')
+    #garages.form-group
+      | Garages
+      - for (var i = 0; i < garages.length; i++) {
+        .form-check
+          input.form-check-input(type='checkbox' value=garages[i].id id='garage' + garages[i].id name="garages[" + garages[i].id + "]")
+          label.form-check-label(for='garage' + garages[i].id) #{garages[i].name}
+      - }
+    .form-group
+      label(for='interval') Interval (Seconds)
+      input.form-control.col-sm-3(id='interval', name='interval', type='text', columns='5' placeholder='Interval')
+    include signOptions
+    button.btn.btn-primary.mr-1(type='button' data-toggle='modal' data-target='#confirmation') Submit
+    include confirmationModal
+    button.btn.btn-default(type='button', id='preview-btn', onclick='preview(event)') Preview
+  include preview

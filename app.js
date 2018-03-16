@@ -11,6 +11,8 @@ require('dotenv').config();
 
 const index = require('./routes/index');
 const message = require('./routes/message');
+const settings = require('./routes/settings');
+const { Sign } = require('./models');
 
 const app = express();
 
@@ -30,13 +32,23 @@ app.use(robots({ UserAgent: '*', Disallow: '/' }));
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(validator());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
+
+// pass signs to all message routes
+app.use('/message', async (req, res, next) => {
+  res.locals.signs = await Sign.findAll({
+    raw: true,
+    order: [['name', 'ASC']],
+  });
+  next();
+});
 app.use('/message', message);
+app.use('/settings', settings);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

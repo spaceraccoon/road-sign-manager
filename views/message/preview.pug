@@ -1,0 +1,90 @@
+div#preview
+  h2 Preview
+  div#preview-display
+
+script.
+  var loadPreview = function(message) {
+    var previewDisplay = document.getElementById('preview-display');
+    while (previewDisplay.hasChildNodes()) {
+      previewDisplay.removeChild(previewDisplay.lastChild);
+    }
+    var bitArray = message.split('').map(Number);
+    bitArray.forEach(function(element) {
+      var cell = document.createElement('div');
+      cell.className = element == 1 ? 'on' : 'off';
+      previewDisplay.appendChild(cell);
+    });
+  }
+
+script.
+  var loadErrors = function(errors) {
+    var flash = document.getElementById('flash');
+    while (flash.hasChildNodes()) {
+      flash.removeChild(flash.lastChild);
+    }
+    var alert = document.createElement('div');
+    alert.classList.add('alert', 'alert-danger');
+    errors.forEach(function(error) {
+      var message = document.createElement('div');
+      message.textContent = error.msg;
+      alert.appendChild(message);
+    });
+    flash.appendChild(alert);
+  }
+script.
+  var previewInterval;
+  var preview = function(event) {
+    event.preventDefault();
+    var message;
+    if (#{mode} == 1) {
+      message = {
+        line1: document.getElementById('line1').value,
+        line2: document.getElementById('line2').value
+      };
+    } else if (#{mode} == 4) {
+      var garages = [];
+      var garageForm = document.getElementById('garages');
+      var checkboxes = garageForm.getElementsByTagName('input');
+      for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+          garages.push(checkboxes[i].value);
+        }
+      };
+      message = {
+        garages,
+        interval: document.getElementById('interval').value
+      }
+    } else {
+       message = document.getElementById('message').value;
+    }
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (xhttp.readyState == 4) {
+        if (xhttp.status == 200) {
+          var response = JSON.parse(this.responseText);
+          if (#{mode} == 4) {
+            clearInterval(previewInterval);
+            loadPreview(response.message[0]);
+            var i = 1 % response.message.length;
+            previewInterval = setInterval(
+              function() {
+                loadPreview(response.message[i]);
+                i = (i + 1) % response.message.length;
+              },
+              parseInt(document.getElementById('interval').value) * 1000
+            );
+          } else {
+            loadPreview(response.message);
+          }
+        } else {
+          var response = JSON.parse(this.responseText);
+          if (response.errors.length > 0) {
+            loadErrors(response.errors);
+          }
+        }
+      }
+    };
+    xhttp.open('POST', '/message/preview', true);
+    xhttp.setRequestHeader('Content-Type', 'application/json');
+    xhttp.send(JSON.stringify({message: message, mode: #{mode}}));
+  }

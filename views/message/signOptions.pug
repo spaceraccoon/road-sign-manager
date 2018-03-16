@@ -1,0 +1,7 @@
+.form-group
+  | Target Signs
+  - for (var i = 0; i < signs.length; i++) {
+    .form-check
+      input.form-check-input(type='checkbox' value=signs[i].id id='sign' + signs[i].id name="signOptions[" + signs[i].id + "]")
+      label.form-check-label(for='sign' + signs[i].id) #{signs[i].name}
+  - }
