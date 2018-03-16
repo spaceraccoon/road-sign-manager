@@ -2,7 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const Garage = sequelize.define(
     'Garage',
     {
-      garageId: { type: DataTypes.BIGINT, unique: true },
+      garageId: DataTypes.BIGINT,
       name: DataTypes.STRING,
     },
     {
