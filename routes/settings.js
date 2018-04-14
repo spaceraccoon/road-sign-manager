@@ -166,6 +166,7 @@ router.post(
         const newSign = await Sign.create({
           name: req.body.name,
           url: req.body.url,
+          key: req.body.key,
         });
         req.flash = {
           type: 'alert-success',
@@ -207,7 +208,7 @@ router.post(
             if (sign) {
               resolve();
             } else {
-              reject(new Error('No garage found.'));
+              reject(new Error('No sign found.'));
             }
           }),
       );
