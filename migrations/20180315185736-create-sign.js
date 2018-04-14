@@ -1,4 +1,4 @@
-module.exports = {
+mmodule.exports = {
   up: (queryInterface, Sequelize) =>
     queryInterface.createTable('Signs', {
       id: {
@@ -10,6 +10,9 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
       },
+      key: {
+        type: Sequelize.STRING,
+      }
       url: {
         type: Sequelize.STRING,
       },
