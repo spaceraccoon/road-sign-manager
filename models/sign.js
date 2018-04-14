@@ -3,6 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     'Sign',
     {
       name: DataTypes.STRING,
+      key: DataTypes.STRING,
       url: DataTypes.STRING,
       mode: DataTypes.INTEGER,
       message: DataTypes.TEXT,
