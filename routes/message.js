@@ -27,9 +27,17 @@ async function updateSigns(signOptions, message, mode) {
       mode,
       message,
     });
-    await axios.post(sign.url, {
-      message,
-    });
+    await axios.post(
+      sign.url,
+      {
+        message,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${sign.key}`,
+        },
+      },
+    );
   });
 }
 
