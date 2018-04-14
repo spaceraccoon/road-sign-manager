@@ -4,8 +4,8 @@ block content
   h1 #{title}
   include flashes
   h3 Add New Garage or Parking Space
-  p Please enter a garage name and a valid Smarking garage ID. Please see the  
-    a(href='https://app.swaggerhub.com/apis/Smarking/smarking-data_api/1.0.0') Smarking API documentation  
+  p Please enter a garage name and a valid Smarking garage ID. Please see the
+    a(href='https://app.swaggerhub.com/apis/Smarking/smarking-data_api/1.0.0') Smarking API documentation
     | for more information.
   form.form-inline.mb-2(action='/settings/create-garage', method='post')
     label.sr-only(for='garageName') Name
@@ -22,12 +22,14 @@ block content
       - }
     button.btn.btn-danger.mb-2(type="submit") Delete
   h3 Create New Sign
-  p Please enter a sign name and a valid URL endpoint.
+  p Please enter a sign name, valid URL endpoint, and valid key.
   form.form-inline.mb-2(action='/settings/create-sign', method='post')
     label.sr-only(for='signName') Name
     input#signName.form-control.mb-2.mr-sm-2(name='name' type='text' placeholder='Name')
     label.sr-only(for='signURL') Sign URL
     input#signURL.form-control.mb-2.mr-sm-2(name='url' type='text' placeholder='Sign URL endpoint')
+    label.sr-only(for='signKey') Key
+    input#signKey.form-control.mb-2.mr-sm-2(name='key' type='text' placeholder='Sign valid key')
     button.btn.btn-primary.mb-2(type="submit") Create
   h3 Delete Existing Signs
   form.form-inline.mb-2(action='/settings/delete-sign', method='post')
