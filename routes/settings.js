@@ -82,6 +82,66 @@ router.post(
   renderSettings,
 );
 
+/* POST edit garage. */
+router.post(
+  '/edit-garage',
+  async (req, res, next) => {
+    let errors;
+    try {
+      req.checkBody('name', 'Please enter a valid garage name.').isLength({
+        min: 1,
+        max: 255,
+      });
+      req
+        .checkBody('garageId', 'Please enter a valid Smarking garage ID.')
+        .custom(garageId =>
+          axios.get(
+            `https://my.smarking.net/api/users/v1/garages/id/${garageId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${process.env.SMARKING_KEY}`,
+              },
+            },
+          ),
+        );
+      try {
+        await req.asyncValidationErrors();
+      } catch (e) {
+        errors = e;
+      }
+      if (errors) {
+        throw errors;
+      } else {
+        const garage = await Garage.findById(req.body.id);
+        await garage.update({
+          garageId: req.body.garageId,
+          name: req.body.name,
+        });
+        req.flash = {
+          type: 'alert-success',
+          messages: [
+            {
+              msg: `Updated ${garage.name}.`,
+            },
+          ],
+        };
+      }
+    } catch (e) {
+      console.error(e);
+      req.flash = {
+        type: 'alert-danger',
+        messages: errors || [
+          {
+            msg: 'Failed to updated garage!',
+          },
+        ],
+      };
+    }
+    next();
+  },
+  renderSettings,
+);
+
 /* POST delete garage. */
 router.post(
   '/delete-garage',
@@ -184,6 +244,61 @@ router.post(
         messages: errors || [
           {
             msg: 'Failed to apply settings!',
+          },
+        ],
+      };
+    }
+    next();
+  },
+  renderSettings,
+);
+
+/* POST edit sign. */
+router.post(
+  '/edit-sign',
+  async (req, res, next) => {
+    let errors;
+    try {
+      req.checkBody('name', 'Please enter a valid sign name.').isLength({
+        min: 1,
+        max: 255,
+      });
+      req
+        .checkBody('url', 'Please enter a valid sign URL.')
+        .matches(
+          /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/,
+          'i',
+        );
+      try {
+        await req.asyncValidationErrors();
+      } catch (e) {
+        errors = e;
+      }
+      if (errors) {
+        throw errors;
+      } else {
+        const sign = await Sign.findById(req.body.id);
+        await sign.update({
+          name: req.body.name,
+          url: req.body.url,
+          key: req.body.key,
+        });
+        req.flash = {
+          type: 'alert-success',
+          messages: [
+            {
+              msg: `Updated ${sign.name}.`,
+            },
+          ],
+        };
+      }
+    } catch (e) {
+      console.error(e);
+      req.flash = {
+        type: 'alert-danger',
+        messages: errors || [
+          {
+            msg: 'Failed to update sign!',
           },
         ],
       };

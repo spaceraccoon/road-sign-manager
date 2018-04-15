@@ -13,6 +13,16 @@ block content
     label.sr-only(for='garageId') Smarking Garage ID
     input#garageId.form-control.mb-2.mr-sm-2(name='garageId' type='text' placeholder='Smarking Garage ID')
     button.btn.btn-primary.mb-2(type="submit") Add
+  h3 Edit Existing Garages
+  - for (var i = 0; i < garages.length; i++) {
+      form.form-inline.mb-2(action='/settings/edit-garage', method='post')
+        input(type='hidden' name='id' value=garages[i].id)
+        label.sr-only(for='garageName' + garages[i].id) Name
+        input.form-control.mb-2.mr-sm-2(id='garageName' + garages[i].id name='name' type='text' placeholder='Name' value=garages[i].name)
+        label.sr-only(for='garageId' + garages[i].id) Smarking Garage ID
+        input.form-control.mb-2.mr-sm-2(id='garageId' + garages[i].id name='garageId' type='text' placeholder='Smarking Garage ID' value=garages[i].garageId)
+        button.btn.btn-primary.mb-2(type="submit") Update
+  - }
   h3 Delete Existing Garages or Parking Spaces
   form.form-inline.mb-2(action='/settings/delete-garage', method='post')
     label.sr-only(for='garageId2') Garages
@@ -22,15 +32,27 @@ block content
       - }
     button.btn.btn-danger.mb-2(type="submit") Delete
   h3 Create New Sign
-  p Please enter a sign name, valid URL endpoint, and valid key.
+  p Please enter a sign name, valid URL endpoint, and valid security key.
   form.form-inline.mb-2(action='/settings/create-sign', method='post')
     label.sr-only(for='signName') Name
     input#signName.form-control.mb-2.mr-sm-2(name='name' type='text' placeholder='Name')
     label.sr-only(for='signURL') Sign URL
     input#signURL.form-control.mb-2.mr-sm-2(name='url' type='text' placeholder='Sign URL endpoint')
     label.sr-only(for='signKey') Key
-    input#signKey.form-control.mb-2.mr-sm-2(name='key' type='text' placeholder='Sign valid key')
+    input#signKey.form-control.mb-2.mr-sm-2(name='key' type='text' placeholder='Valid security key')
     button.btn.btn-primary.mb-2(type="submit") Create
+  h3 Edit Existing Signs
+  - for (var i = 0; i < signs.length; i++) {
+      form.form-inline.mb-2(action='/settings/edit-sign', method='post')
+        input(type='hidden' name='id' value=signs[i].id)
+        label.sr-only(for='signName' + signs[i].id) Name
+        input.form-control.mb-2.mr-sm-2(id='signName' + signs[i].id name='name' type='text' placeholder='Name' value=signs[i].name)
+        label.sr-only(for='signURL' + signs[i].id) Sign URL
+        input.form-control.mb-2.mr-sm-2(id='signURL' + signs[i].id name='url' type='text' placeholder='Sign URL endpoint' value=signs[i].url)
+        label.sr-only(for='signKey' + signs[i].id) Key
+        input.form-control.mb-2.mr-sm-2(id='signKey' + signs[i].id name='key' type='text' placeholder='Valid security key' value=signs[i].key)
+        button.btn.btn-primary.mb-2(type="submit") Update
+  - }
   h3 Delete Existing Signs
   form.form-inline.mb-2(action='/settings/delete-sign', method='post')
     label.sr-only(for='signId') Signs

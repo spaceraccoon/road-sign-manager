@@ -6,8 +6,18 @@ body {
   color: #fff;
 }
 
+#confirmation .modal-dialog {
+  max-width: 1000px;
+}
+
 #preview {
   margin-top: 20px;
+}
+
+#confirmation-display {
+  width: 960px;
+  height: 270px;
+  background-color: #333;
 }
 
 #preview-display {

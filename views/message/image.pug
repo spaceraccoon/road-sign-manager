@@ -9,7 +9,5 @@ block content
       label(for='message') Image URL
       input.form-control.col-sm-4(id='message', name='message', type='text', placeholder='Enter your image URL')
     include signOptions
-    button.btn.btn-primary.mr-1(type='button' data-toggle='modal' data-target='#confirmation') Submit
     include confirmationModal
-    button.btn.btn-default(type='button', id='preview-btn', onclick='preview(event)') Preview
   include preview

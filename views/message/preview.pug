@@ -3,8 +3,8 @@ div#preview
   div#preview-display
 
 script.
-  var loadPreview = function(message) {
-    var previewDisplay = document.getElementById('preview-display');
+  var loadPreview = function(message, displayWrapper) {
+    var previewDisplay = document.getElementById(displayWrapper);
     while (previewDisplay.hasChildNodes()) {
       previewDisplay.removeChild(previewDisplay.lastChild);
     }
@@ -33,8 +33,10 @@ script.
   }
 script.
   var previewInterval;
-  var preview = function(event) {
+  var preview = function(event, displayWrapper) {
+    console.log('jello')
     event.preventDefault();
+    event.stopPropagation();
     var message;
     if (#{mode} == 1) {
       message = {
@@ -62,19 +64,22 @@ script.
       if (xhttp.readyState == 4) {
         if (xhttp.status == 200) {
           var response = JSON.parse(this.responseText);
+          if (displayWrapper === 'confirmation-display') {
+            $('#confirmation').modal('show');
+          }
           if (#{mode} == 4) {
             clearInterval(previewInterval);
-            loadPreview(response.message[0]);
+            loadPreview(response.message[0], displayWrapper);
             var i = 1 % response.message.length;
             previewInterval = setInterval(
               function() {
-                loadPreview(response.message[i]);
+                loadPreview(response.message[i], displayWrapper);
                 i = (i + 1) % response.message.length;
               },
               parseInt(document.getElementById('interval').value) * 1000
             );
           } else {
-            loadPreview(response.message);
+            loadPreview(response.message, displayWrapper);
           }
         } else {
           var response = JSON.parse(this.responseText);

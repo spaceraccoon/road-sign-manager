@@ -16,7 +16,5 @@ block content
       label(for='interval') Interval (Seconds)
       input.form-control.col-sm-3(id='interval', name='interval', type='text', columns='5' placeholder='Interval')
     include signOptions
-    button.btn.btn-primary.mr-1(type='button' data-toggle='modal' data-target='#confirmation') Submit
     include confirmationModal
-    button.btn.btn-default(type='button', id='preview-btn', onclick='preview(event)') Preview
   include preview

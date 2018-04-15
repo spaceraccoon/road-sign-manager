@@ -9,7 +9,5 @@ block content
       label(for='message') Message
       textarea.form-control(rows='5', id='message', name='message', placeholder='Enter your manual message')
     include signOptions
-    button.btn.btn-primary.mr-1(type='button' data-toggle='modal' data-target='#confirmation') Submit
     include confirmationModal
-    button.btn.btn-default(type='button', id='preview-btn', onclick='preview(event)') Preview
   include preview

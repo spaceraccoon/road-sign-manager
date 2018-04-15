@@ -12,7 +12,5 @@ block content
       label(for='line2') Line 2
       input.form-control.col-sm-3(id='line2', name='line2', type='text', placeholder='Line 2 (optional)')
     include signOptions
-    button.btn.btn-primary.mr-1(type='button' data-toggle='modal' data-target='#confirmation') Submit
     include confirmationModal
-    button.btn.btn-default(type='button', id='preview-btn', onclick='preview(event)') Preview
   include preview
