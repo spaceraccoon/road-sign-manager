@@ -1,5 +1,11 @@
 const axios = require('axios');
 
+/**
+ * Fetches Smarking data for the given garage ID.
+ * @param {string} garageId Smarking Garage ID.
+ * @return {!Object<string, number>} Object literal containing garage name and
+ * number of free spaces.
+ */
 async function fetchData(garageId) {
   try {
     let response = await axios.get(

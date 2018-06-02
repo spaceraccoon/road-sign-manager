@@ -3,10 +3,15 @@ const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 const { document } = new JSDOM('...').window;
 
+/**
+ * Transforms array of texts into binary string.
+ * @param {!Array<string>} textlines Array of text strings.
+ * @return {string} Binary string with 1 and 0 corresponding to lit pixels.
+ */
 function transformText(textlines) {
   let lines = textlines;
   lines = lines.filter(line => line !== '');
-  let answer = '';
+  let binString = '';
   for (let i = 0; i < lines.length; i += 1) {
     const buffer = document.createElement('canvas');
     const bufContext = buffer.getContext('2d');
@@ -26,17 +31,17 @@ function transformText(textlines) {
     for (let y = 0; y < buffer.height; y += 1) {
       for (let x = 0; x < buffer.width; x += 1) {
         const whichPixel = buffer.width * y + x;
-        answer += img.data[4 * whichPixel] < 140 ? 1 : 0; // If the red channel of the pixel is lower than 140, we consider it 'on'
+        binString += img.data[4 * whichPixel] < 140 ? 1 : 0; // If the red channel of the pixel is lower than 140, we consider it 'on'
       }
     }
   }
   const remainder = process.env.DISPLAY_HEIGHT % lines.length;
   for (let y = 0; y < remainder; y += 1) {
     for (let x = 0; x < process.env.DISPLAY_WIDTH; x += 1) {
-      answer += 0;
+      binString += 0;
     }
   }
-  return answer;
+  return binString;
 }
 
 module.exports = transformText;

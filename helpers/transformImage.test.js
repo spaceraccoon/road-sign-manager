@@ -1,4 +1,5 @@
 require('dotenv').config();
+
 const transformImage = require('./transformImage.js');
 
 describe('Test the transformImage function', () => {

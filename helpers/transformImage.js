@@ -1,6 +1,10 @@
 const jimp = require('jimp');
 
-// Converts pixels into a binary string based on a color threshold
+/**
+ * Converts pixels into a binary string based on a color threshold.
+ * @param {*} image 
+ * @return {string} Binary string with 1 and 0 corresponding to lit pixels.
+ */
 function processPixels(image) {
   let binString = '';
   const threshold = 170;
@@ -10,7 +14,8 @@ function processPixels(image) {
       const hex = image.getPixelColor(j, i);
       const rgb = jimp.intToRGBA(hex);
 
-      // Set string to 1 if any rgb value below threshold and opacity not 0 (for png)
+      // Set string to 1 if any rgb value below threshold and opacity not 0
+      // (for png).
       binString +=
         (rgb.r < threshold || rgb.g < threshold || rgb.b < threshold) &&
         rgb.a !== 0
@@ -21,6 +26,12 @@ function processPixels(image) {
   return binString;
 }
 
+/**
+ * Transforms image data from given image URL into binary string.
+ * @param {string} imageURL 
+ * @return {!Promise} Promise that resolves with binary string or rejects with
+ * error.
+ */
 function transformImage(imageURL) {
   return new Promise((resolve, reject) => {
     jimp.read(imageURL, (err, image) => {

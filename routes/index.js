@@ -1,3 +1,7 @@
+/**
+ * Routes that render the static home and about pages.
+ */
+
 const express = require('express');
 
 const { Garage, Sign } = require('../models');

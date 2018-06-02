@@ -1,3 +1,9 @@
+/**
+ * Routes that render and handle the settings pages. GET routes simply return
+ * the templates, while POST routes modify garages or signs.
+ * TODO: Change POST routes into DELETE, PATCH, POST routes.
+ */
+
 const express = require('express');
 const axios = require('axios');
 

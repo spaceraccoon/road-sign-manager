@@ -1,3 +1,9 @@
+/**
+ * Routes that render and handle the message pages. GET routes simply return
+ * the templates, while POST routes take incoming data, transform them into
+ * binary stringsm and forward them to the road signs.
+ */
+
 const express = require('express');
 const axios = require('axios');
 
